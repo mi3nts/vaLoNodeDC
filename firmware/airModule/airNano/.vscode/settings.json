@@ -1,0 +1,7 @@
+{
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/teamlary/.platformio/penv/bin:/home/teamlary/.platformio/penv:/home/teamlary/.local/bin:/home/teamlary/anaconda3/bin:/home/teamlary/.local/bin:/home/teamlary/.rvm/gems/ruby-2.5.1/bin:/home/teamlary/.rvm/gems/ruby-2.5.1@global/bin:/home/teamlary/.rvm/rubies/ruby-2.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/teamlary/.rvm/bin:/home/teamlary/.rvm/bin:/home/teamlary/.rvm/bin:/home/teamlary/.rvm/bin",
+        "PLATFORMIO_CALLER": "vscode"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+}

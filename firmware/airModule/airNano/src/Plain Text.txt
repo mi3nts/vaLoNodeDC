@@ -1,0 +1,235 @@
+#include "Arduino.h"
+#include "Seeed_BME280.h"
+#include "MutichannelGasSensor.h"
+#include "OPCN2NanoMints.h"
+#include "Seeed_HM330X.h"
+#include "jobsMints.h"
+#include "devicesMints.h"
+
+
+
+#define CS 10
+
+OPCN2NanoMints opc = OPCN2NanoMints(CS);
+bool  OPCN2Online;
+
+bool SCD30Online;
+SCD30 scd;
+
+bool HM3301Online
+HM330X hm3301;
+u8 hm3301Data[30];
+
+
+//
+bool MGS001Online;
+
+bool BME280Online;
+BME280 bme280; // I2C
+
+uint16_t sensingPeriod = 2417;
+uint16_t initPeriod = 1500;
+
+
+void setup() {
+
+  delay(initPeriod);
+  initializeSerialMints();
+
+  delay(initPeriod);
+  BME280Online = initializeBME280Mints();
+  //
+  delay(initPeriod);
+  MGS001Online =  initializeMGS001Mints();
+
+  //
+  delay(initPeriod);
+  SCD30Online = initializeSCD30Mints();
+
+  delay(initPeriod);
+  OPCN2Online =  initializeOPCN2Mints();
+
+}
+
+
+
+
+// the loop routine runs over and over again forever:
+void loop() {
+
+    delay(sensingPeriod);
+    if(BME280Online)
+    {
+      readBME280Mints();
+    }
+    // //
+    delay(sensingPeriod);
+    if(MGS001Online)
+    {
+      readMGS001Mints();
+    }
+    // //
+    delay(sensingPeriod);
+    if(SCD30Online)
+    {
+      readSCD30Mints();
+    }
+    //
+    delay(sensingPeriod);
+    if(OPCN2Online)
+    {
+      readOPCN2Mints();
+    }
+
+
+}
+
+
+
+#include "Seeed_HM330X.h"
+
+#ifdef  ARDUINO_SAMD_VARIANT_COMPLIANCE
+  #define SERIAL SerialUSB
+#else
+  #define SERIAL Serial
+#endif
+
+
+HM330X sensor;
+u8 buf[30];
+
+
+const char *str[]={"sensor num: ","PM1.0 concentration(CF=1,Standard particulate matter,unit:ug/m3): ",
+                    "PM2.5 concentration(CF=1,Standard particulate matter,unit:ug/m3): ",
+                    "PM10 concentration(CF=1,Standard particulate matter,unit:ug/m3): ",
+                    "PM1.0 concentration(Atmospheric environment,unit:ug/m3): ",
+                    "PM2.5 concentration(Atmospheric environment,unit:ug/m3): ",
+                    "PM10 concentration(Atmospheric environment,unit:ug/m3): ",
+                    };
+
+err_t print_result(const char* str,u16 value)
+{
+    if(NULL==str)
+        return ERROR_PARAM;
+    SERIAL.print(str);
+    SERIAL.println(value);
+    return NO_ERROR;
+}
+
+
+void readHM3301(u8 *data)
+{
+    // u16 value=0;
+    // for(int i=1;i<8;i++)
+    // {    Serial.println(i);
+    //      value = (u16)data[i*2]<<8|data[i*2+1];
+    //      Serial.println(value);
+    //      Serial.println("-----");
+         
+    //     //  print_result(str[i-1],value);
+    //     //  print_result(str[i-1],value);
+
+    // }
+
+u16 pm1;
+u16 pm2_5;
+u16 pm10;
+
+Serial.println("pm1:");
+pm1 = (u16)data[2*2]<<8|data[2*2+1];
+Serial.println(pm1);
+
+Serial.println("pm2_5:");
+pm2_5 = (u16)data[3*2]<<8|data[3*2+1];
+Serial.println(pm2_5);
+
+Serial.println("pm10:");
+pm10 = (u16)data[4*2]<<8|data[4*2+1];
+Serial.println(pm10);
+
+
+}
+
+
+
+
+
+err_t parse_result_value(u8 *data)
+{
+    if(NULL==data)
+        return ERROR_PARAM;
+    for(int i=0;i<28;i++)
+    {
+        SERIAL.print(data[i],HEX);
+        SERIAL.print("  ");
+        if((0==(i)%5)||(0==i))
+        {
+            SERIAL.println(" ");
+        }
+    }
+    u8 sum=0;
+    for(int i=0;i<28;i++)
+    {
+        sum+=data[i];
+    }
+    if(sum!=data[28])
+    {
+        SERIAL.println("wrong checkSum!!!!");
+    }
+    SERIAL.println(" ");
+    SERIAL.println(" ");
+    return NO_ERROR;
+}
+
+
+
+
+
+
+
+/*30s*/
+void setup()
+{
+    SERIAL.begin(9600);
+    delay(100);
+    SERIAL.println("Serial start");
+    if(sensor.init())
+    {
+        SERIAL.println("HM330X init failed!!!");
+        while(1);
+    }
+
+}
+
+
+
+void loop()
+{
+    // if(sensor.read_sensor_value(buf,29))
+    // {
+    //     SERIAL.println("HM330X read result failed!!!");
+    // }
+    // parse_result_value(buf);
+    // parse_result(buf);
+
+    sensor.read_sensor_value(buf,29);
+
+    u16 pm1;
+    u16 pm2_5;
+    u16 pm10;
+
+    Serial.println("pm1:");
+    pm1 = (u16)buf[2*2]<<8|buf[2*2+1];
+    Serial.println(pm1);
+
+    Serial.println("pm2_5:");
+    pm2_5 = (u16)buf[3*2]<<8|buf[3*2+1];
+    Serial.println(pm2_5);
+
+    Serial.println("pm10:");
+    pm10 = (u16)buf[4*2]<<8|buf[4*2+1];
+    Serial.println(pm10);
+
+
+    delay(5000);
+}

@@ -1,0 +1,43 @@
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/lib/MutichannelGasSensor
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/lib/OPCN3NanoMints
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/lib/Seeed_HM330X
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/lib/devicesMints
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/lib/jobsMints
+-I/home/teamlary/.platformio/lib/Adafruit Unified Sensor_ID31
+-I/home/teamlary/.platformio/lib/Grove - Barometer Sensor BME280_ID5348
+-I/home/teamlary/.platformio/lib/SparkFun_SCD30_Arduino_Library_ID5449/src
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src
+-I/home/teamlary/.platformio/lib/Adafruit BMP280 Library_ID528
+-I/home/teamlary/.platformio/lib/Adafruit BusIO_ID6214
+-I/home/teamlary/.platformio/lib/Adafruit HTU21DF Library_ID566
+-I/home/teamlary/.platformio/lib/Adafruit INA219_ID160
+-I/home/teamlary/.platformio/lib/Adafruit SleepyDog Library_ID401
+-I/home/teamlary/.platformio/lib/Adafruit SleepyDog Library_ID401/utility
+-I/home/teamlary/.platformio/lib/Adafruit TSL2591 Library_ID463
+-I/home/teamlary/.platformio/lib/Adafruit VEML6075 Library_ID5788
+-I/home/teamlary/.platformio/lib/Adafruit_VEML6070_ID341
+-I/home/teamlary/.platformio/lib/Beelan LoRaWAN_ID6764/src
+-I/home/teamlary/.platformio/lib/Grove - OLED Display 0.96_ID5347
+-I/home/teamlary/.platformio/lib/Grove - Sunlight Sensor_ID5351
+-I/home/teamlary/.platformio/lib/MultiTrans_ID5713/src
+-I/home/teamlary/.platformio/lib/SparkFun VEML6075 Arduino Library_ID5452/src
+-I/home/teamlary/.platformio/lib/Time_ID44
+-I/home/teamlary/.platformio/lib/TinyGPSPlus_ID1655/src
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src
+-I/home/teamlary/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include
+-I/home/teamlary/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include-fixed
+-I/home/teamlary/.platformio/packages/toolchain-atmelavr/avr/include
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/include
+-I/media/teamlary/Team_Lary_1/gitGubRepos/Lakitha/centralHub/firmware/airModule/airNano/src
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/cores/arduino
+-I/home/teamlary/.platformio/packages/framework-arduinoavr/variants/eightanaloginputs
+-I/home/teamlary/.platformio/packages/tool-unity
+-DPLATFORMIO=40303
+-DARDUINO_AVR_NANO
+-DF_CPU=16000000L
+-DARDUINO_ARCH_AVR
+-DARDUINO=10805
+-D__AVR_ATmega328P__
