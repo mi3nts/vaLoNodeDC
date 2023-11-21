@@ -1,4 +1,6 @@
-@reboot cd /home/teamlary/gitHubRepos/IQTestNode/firmware/xu4Mqtt && ./runAll.sh 
-45 * * * *  cd /home/teamlary/gitHubRepos/IQTestNode/firmware/xu4Mqtt && ./runAll.sh 
+
+@reboot cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAll.sh
+45 * * * *  cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAll.sh 
 * * * * * rsync -avzrtu -e "ssh -p 2222" /home/teamlary/mintsData/raw/ mints@mintsdata.utdallas.edu:raw
-*/5 * * * * cd /home/teamlary/gitHubRepos/IQTestNode/firmware/xu4Mqtt && python3 deleter.py
+*/5 * * * * cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && python3 deleter.py
+

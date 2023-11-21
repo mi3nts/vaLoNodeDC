@@ -35,7 +35,7 @@ def sendChars(printStr,serIn,charsIn,sleepTime):
 
 def main(firstReset,firstResolutionSetup,firstMetricSystemSetup,loopInterval):
 
-    time.sleep(3)
+    time.sleep(1)
 
     ser = serial.Serial(
     port= rainPort,\
@@ -113,9 +113,9 @@ if __name__ == "__main__":
     print("=============")
     print("    MINTS    ")
     print("=============")
-    time.sleep(10)    
+    time.sleep(1)    
     print("Monitoring Rain Sensor on port: {0}".format(rainPort)+ " with baudrate " + str(baudRate))
-    time.sleep(10)
+    time.sleep(1)
     main(firstReset,firstResolutionSetup,firstMetricSystemSetup,loopInterval)
     
     
