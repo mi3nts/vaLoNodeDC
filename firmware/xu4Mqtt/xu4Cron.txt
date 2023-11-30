@@ -1,6 +1,8 @@
 
-@reboot cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAll.sh
-45 * * * *  cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAll.sh 
+@reboot cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAll.sh 2>> /home/teamlary/logs/error.log
+@reboot cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && sleep 30 && python3 audioDeleter.py
+@reboot cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAllAudio.sh 2>> /home/teamlary/logs/errorAudio.log
+45 * * * *  cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAll.sh 2>> /home/teamlary/logs/error.log
+15 * * * *  cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && ./runAllAudio.sh 2>> /home/teamlary/logs/errorAudio.log
 * * * * * rsync -avzrtu -e "ssh -p 2222" /home/teamlary/mintsData/raw/ mints@mintsdata.utdallas.edu:raw
 */5 * * * * cd /home/teamlary/gitHubRepos/vaLoNodeDC/firmware/xu4Mqtt && python3 deleter.py
-

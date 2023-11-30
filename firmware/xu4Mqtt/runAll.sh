@@ -24,21 +24,15 @@ sleep 5
 python3 i2cReader.py &
 sleep 5
 
-kill $(pgrep -f 'python3 airMarReader.py')
-sleep 5
-python3 airMarReader.py &
-sleep 5
-
 kill $(pgrep -f 'python3 rg15Reader.py')  
 sleep 5
 python3 rg15Reader.py
 sleep 5
 
-kill $(pgrep -f 'audioAnalyzer.py') 
+kill $(pgrep -f 'python3 airMarReader.py')
 sleep 5
-python3 audioAnalyzer.py &
+python3 airMarReader.py &
 sleep 5
-
 
 python3 ipReader.py
 sleep 5
