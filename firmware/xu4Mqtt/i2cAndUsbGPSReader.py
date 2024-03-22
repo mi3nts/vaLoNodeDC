@@ -150,6 +150,7 @@ if __name__ == "__main__":
             
             if pa101dOnline and mSR.getDeltaTimeAM(pa101dGGAReadTime,delta):
                 pa101dGGAReadTime  = time.time()
+                print("---GGA---")
                 pa101d.readMqtt("GGA");                  
          
             if bme280Online and mSR.getDeltaTimeAM(bme280ReadTime,delta):
