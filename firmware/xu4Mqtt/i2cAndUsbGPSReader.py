@@ -66,6 +66,8 @@ reader = pynmea2.NMEAStreamReader()
 
 lastGPRMC = time.time()
 lastGPGGA = time.time()
+lastGNRMC = time.time()
+lastGNGGA = time.time()
 delta  = 10
 #this will store the line
 line = []
@@ -133,12 +135,12 @@ if __name__ == "__main__":
                         if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
                             mSR.GPSGPRMC2Write(dataString,dateTime)
                             lastGPRMC = time.time()
-                        if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                        if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
                             mSR.GPSGPGGA2Write(dataString,dateTime)
-                            lastGPGGA = time.time()
-                        if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                            lastGNGGA = time.time()
+                        if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGNRMC,delta)):
                             mSR.GPSGPRMC2Write(dataString,dateTime)
-                            lastGPRMC = time.time()                    
+                            lastGNRMC = time.time()                    
                         line = []
                         break
 
