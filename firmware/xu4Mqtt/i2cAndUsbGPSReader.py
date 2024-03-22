@@ -124,7 +124,6 @@ if __name__ == "__main__":
             if usbGPSAvailability:        
                 for c in serialConnection.read():
                     line.append(chr(c))
-            
                     if chr(c) == '\n':
                         dataString     = (''.join(line))
                         print(dataString)
@@ -154,7 +153,7 @@ if __name__ == "__main__":
                 bme280.readMqtt();
             
             if pa101dOnline and mSR.getDeltaTimeAM(pa101dGGAReadTime,delta):
-                pa101dReadTime  = time.time()
+                pa101dGGAReadTime  = time.time()
                 pa101d.readMqtt("GGA");                        
             
             if scd30Online and mSR.getDeltaTimeAM(scd30ReadTime,delta):
@@ -162,7 +161,7 @@ if __name__ == "__main__":
                 scd30ReadTime  = time.time()
 
             if pa101dOnline and mSR.getDeltaTimeAM(pa101dRMCReadTime,delta):
-                pa101dReadTime  = time.time()
+                pa101dRMCReadTime  = time.time()
                 pa101d.readMqtt("RMC");            
 
         except Exception as e:
