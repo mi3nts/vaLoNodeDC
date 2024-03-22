@@ -126,7 +126,9 @@ if __name__ == "__main__":
                     line.append(chr(c))
                     if chr(c) == '\n':
                         dataString     = (''.join(line))
+                        print("----------")
                         print(dataString)
+                        print("----------")
                         dateTime  = datetime.datetime.now()
                         if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
                             mSR.GPSGPGGA2Write(dataString,dateTime)
