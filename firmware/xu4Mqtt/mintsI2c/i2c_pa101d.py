@@ -46,6 +46,7 @@ class PAI101D_:
         print("Setting PA101D to normal")
         self.gps.send_command("$PMTK225,0*2B")
         timeOut += time.time()
+        self.gps.read_sentence()
         while time.time() < timeOut:
             try:
                 sentence = self.gps.read_sentence()
