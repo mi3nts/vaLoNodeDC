@@ -100,7 +100,7 @@ if __name__ == "__main__":
     print()
     
 
-    usbGPSAvailability,serialConnection  = is_serial_port_open(gpsPort)
+    usbGPSAvailability,serialConnection  = is_serial_port_open(gpsPort[0])
 
     # I2C Devices 
     as7265xOnline  =  as7265x.initiate()
