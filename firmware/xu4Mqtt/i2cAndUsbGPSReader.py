@@ -122,6 +122,7 @@ if __name__ == "__main__":
     while True:
         try:
             if usbGPSAvailability:        
+                print("USB GPS Begin")
                 for c in serialConnection.read():
                     line.append(chr(c))
                     if chr(c) == '\n':
@@ -144,7 +145,7 @@ if __name__ == "__main__":
                             lastGNRMC = time.time()                    
                         line = []
                         break
-
+                print("USB GPS END")
             
             if as7265xOnline and mSR.getDeltaTimeAM(as7265xReadTime,delta):
                 as7265xReadTime  = time.time()
