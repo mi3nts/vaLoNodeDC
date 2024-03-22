@@ -32,10 +32,12 @@ class PAI101D_:
             self.gps.send_command("PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
 
             print("Sending to Full Power Mode")
-            # self.gps.send_command("$PMTK161,0*28")
             self.gps.send_command("$PMTK225,0*2B")
 
             time.sleep(1)
+            print("---------")
+            self.gps.gps_qual
+            print("---------")
 
             return self.gps.gps_qual is not None;
         except OSError:
