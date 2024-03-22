@@ -35,9 +35,6 @@ class PAI101D_:
             self.gps.send_command("$PMTK225,0*2B")
 
             time.sleep(1)
-            print("---------")
-            self.gps.gps_qual
-            print("---------")
 
             return self.gps.gps_qual is not None;
         except OSError:

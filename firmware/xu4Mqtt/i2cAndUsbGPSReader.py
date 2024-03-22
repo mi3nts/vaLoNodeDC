@@ -121,27 +121,27 @@ if __name__ == "__main__":
 
     while True:
         try:
-            # if usbGPSAvailability:        
-            #     for c in serialConnection.read():
-            #         line.append(chr(c))
-            #         if chr(c) == '\n':
-            #             dataString     = (''.join(line))
-            #             # print(dataString)
-            #             dateTime  = datetime.datetime.now()
-            #             if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
-            #                 mSR.GPSGPGGA2Write(dataString,dateTime)
-            #                 lastGPGGA = time.time()
-            #             if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
-            #                 mSR.GPSGPRMC2Write(dataString,dateTime)
-            #                 lastGPRMC = time.time()
-            #             if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
-            #                 mSR.GPSGPGGA2Write(dataString,dateTime)
-            #                 lastGNGGA = time.time()
-            #             if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGNRMC,delta)):
-            #                 mSR.GPSGPRMC2Write(dataString,dateTime)
-            #                 lastGNRMC = time.time()                    
-            #             line = []
-            #             break
+            if usbGPSAvailability:        
+                for c in serialConnection.read():
+                    line.append(chr(c))
+                    if chr(c) == '\n':
+                        dataString     = (''.join(line))
+                        # print(dataString)
+                        dateTime  = datetime.datetime.now()
+                        if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                            mSR.GPSGPGGA2Write(dataString,dateTime)
+                            lastGPGGA = time.time()
+                        if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                            mSR.GPSGPRMC2Write(dataString,dateTime)
+                            lastGPRMC = time.time()
+                        if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
+                            mSR.GPSGPGGA2Write(dataString,dateTime)
+                            lastGNGGA = time.time()
+                        if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGNRMC,delta)):
+                            mSR.GPSGPRMC2Write(dataString,dateTime)
+                            lastGNRMC = time.time()                    
+                        line = []
+                        break
 
             
             if as7265xOnline and mSR.getDeltaTimeAM(as7265xReadTime,delta):
