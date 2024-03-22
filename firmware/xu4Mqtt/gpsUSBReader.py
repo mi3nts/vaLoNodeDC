@@ -11,7 +11,7 @@ from collections import OrderedDict
 
 dataFolder = mD.dataFolder
 # duePort    = mD.duePort
-# gpsPort    =  mD.gpsPort
+gpsPort    =  mD.USBGPSPort
 
 baudRate  = 9600
 
@@ -22,7 +22,7 @@ def main():
 
     reader = pynmea2.NMEAStreamReader()
     ser = serial.Serial(
-    port= '/dev/ttyACM0',\
+    port= gpsPort,\
     baudrate=baudRate,\
     parity  =serial.PARITY_NONE,\
     stopbits=serial.STOPBITS_ONE,\
@@ -36,13 +36,15 @@ def main():
 
     #this will store the line
     line = []
+
+
+    
     while True:
        try:
            for c in ser.read():
                line.append(chr(c))
         
                if chr(c) == '\n':
-                   
                    dataString     = (''.join(line))
                    print(dataString)
                    dateTime  = datetime.datetime.now()
