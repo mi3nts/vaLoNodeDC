@@ -77,7 +77,7 @@ dataFolderTmp             = "/home/teamlary/mintsDataTmp"
 
 ipsPorts              = findIPSPorts()
 USBRG15Port           = findUSBRG15Port()
-USBGPSPort            = findUSBRG15Port()
+USBGPSPort            = findUSBGPSPort()
 
 macAddress            = findMacAddress()
 latestDisplayOn       = False
