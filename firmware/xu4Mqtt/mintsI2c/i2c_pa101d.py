@@ -85,9 +85,9 @@ class PAI101D_:
         
         while time.time() < timeOut:
             try:
-                print("Data String Reading")
+                # print("Data String Reading")
                 dataString = self.gps.read_sentence()
-                print(dataString)
+                # print(dataString)
                 print("-------------------")
                 if dataString.find(strExpected) >0:
                     dateTime  = datetime.datetime.now()
