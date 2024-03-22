@@ -128,20 +128,20 @@ if __name__ == "__main__":
                     if chr(c) == '\n':
                         dataString     = (''.join(line))
                         print("----------")
-                        print(dataString)
+                        print(dataString.split('\r')[0])
                         print("----------")
                         dateTime  = datetime.datetime.now()
                         if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
-                            mSR.GPSGPGGA2Write(dataString,dateTime)
+                            mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
                             lastGPGGA = time.time()
                         if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
-                            mSR.GPSGPRMC2Write(dataString,dateTime)
+                            mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
                             lastGPRMC = time.time()
                         if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
-                            mSR.GPSGPGGA2Write(dataString,dateTime)
+                            mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
                             lastGNGGA = time.time()
                         if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGNRMC,delta)):
-                            mSR.GPSGPRMC2Write(dataString,dateTime)
+                            mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
                             lastGNRMC = time.time()                    
                         line = []
                         break
