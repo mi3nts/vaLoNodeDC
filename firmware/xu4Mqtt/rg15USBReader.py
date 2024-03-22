@@ -6,7 +6,7 @@ import sys
 from mintsXU4 import mintsSensorReader as mSR
 from mintsXU4 import mintsDefinitions as mD
 
-rainPort               = mD.USBRG15Port
+rainPort               = mD.USBRG15Port[0]
 firstReset             = True
 firstResolutionSetup   = True
 firstMetricSystemSetup = True
