@@ -147,7 +147,9 @@ if __name__ == "__main__":
                     time.sleep(.5)
                     line = []
                     print ("USB GPS Error and type: %s - %s." % (e,type(e)))
+                    print("Errornous String")
                     print(dataString)
+                    print("+=+=+=+=+=+=+=+=")
                     time.sleep(.5)
         
                               
