@@ -168,6 +168,7 @@ if __name__ == "__main__":
             
             if pa101dOnline and mSR.getDeltaTimeAM(pa101dRMCReadTime,delta):
                 pa101dRMCReadTime  = time.time()
+                print("---RMC---")
                 pa101d.readMqtt("RMC");               
             
             if scd30Online and mSR.getDeltaTimeAM(scd30ReadTime,delta):
