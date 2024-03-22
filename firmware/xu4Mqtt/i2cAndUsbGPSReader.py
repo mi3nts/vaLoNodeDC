@@ -121,32 +121,35 @@ if __name__ == "__main__":
 
     while True:
         try:
-            if usbGPSAvailability:        
-                print("USB GPS Begin")
-                for c in serialConnection.read():
-                    line.append(chr(c))
-                    if chr(c) == '\n':
-                        dataString     = (''.join(line))
-                        print("----------")
-                        print(dataString.split('\r')[0])
-                        print("----------")
-                        dateTime  = datetime.datetime.now()
-                        if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
-                            mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
-                            lastGPGGA = time.time()
-                        if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
-                            mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
-                            lastGPRMC = time.time()
-                        if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
-                            mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
-                            lastGNGGA = time.time()
-                        if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGNRMC,delta)):
-                            mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
-                            lastGNRMC = time.time()                    
-                        line = []
-                        break
-                print("USB GPS END")
-            
+            if usbGPSAvailability:
+                try:       
+                    for c in serialConnection.read():
+                        line.append(chr(c))
+                        if chr(c) == '\n':
+                            dataString     = (''.join(line)).split('\r')[0]
+                            print(dataString)
+                            dateTime  = datetime.datetime.now()
+                            if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                                mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
+                                lastGPGGA = time.time()
+                            if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                                mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
+                                lastGPRMC = time.time()
+                            if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
+                                mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
+                                lastGNGGA = time.time()
+                            if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGNRMC,delta)):
+                                mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
+                                lastGNRMC = time.time()                    
+                            line = []
+                            break
+                except Exception as e:
+                    time.sleep(.5)
+                    line = []
+                    print ("Error and type: %s - %s." % (e,type(e)))
+                    time.sleep(.5)
+        
+                              
             if as7265xOnline and mSR.getDeltaTimeAM(as7265xReadTime,delta):
                 as7265xReadTime  = time.time()
                 as7265x.readMqtt();
