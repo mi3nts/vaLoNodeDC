@@ -40,7 +40,19 @@ import time
 import os
 import smbus2
 
+
+
+
+
+
 debug  = False 
+
+
+dataFolder = mD.dataFolder
+gpsPort    =  mD.USBGPSPort
+baudRate  = 9600
+
+
 
 bus     = smbus2.SMBus(1)
 
@@ -49,14 +61,47 @@ bme280  = BME280(bus,debug)
 as7265x = AS7265X(bus,debug)
 pa101d  = PAI101D_(bus,debug)
 
+reader = pynmea2.NMEAStreamReader()
+
+
+lastGPRMC = time.time()
+lastGPGGA = time.time()
+delta  = 10
+#this will store the line
+line = []
+
+
+
+def is_serial_port_open(port):
+    try:
+        # Attempt to open the serial port
+        ser = serial.Serial(
+        port= port,\
+        baudrate=baudRate,\
+        parity  =serial.PARITY_NONE,\
+        stopbits=serial.STOPBITS_ONE,\
+        bytesize=serial.EIGHTBITS,\
+        timeout=0)
+        print("connected to: " + ser.portstr)
+        # If successfully opened, close the port and return True
+        return True, ser
+    except serial.SerialException:
+        # If an exception occurs (port is not available or already open), return False
+        ser = []
+        return False, ser
+
+
 
 
 if __name__ == "__main__":
     
     print()
-    print("============ MINTS POLO NODES ============")
+    print("============ MINTS I2C + USB GPS Reader ============")
     print()
     
+
+    usbGPSAvailability,serialConnection  = is_serial_port_open(gpsPort)
+
     # I2C Devices 
     as7265xOnline  =  as7265x.initiate()
     as7265xReadTime  = time.time()
@@ -71,22 +116,48 @@ if __name__ == "__main__":
     pa101dGGAReadTime  = time.time()
     pa101dRMCReadTime  = time.time()    
 
-    delta = 10
-
     while True:
-        try:    
+        try:
+            if usbGPSAvailability:        
+                for c in serialConnection.read():
+                    line.append(chr(c))
+            
+                    if chr(c) == '\n':
+                        dataString     = (''.join(line))
+                        print(dataString)
+                        dateTime  = datetime.datetime.now()
+                        if (dataString.startswith("$GPGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                            mSR.GPSGPGGA2Write(dataString,dateTime)
+                            lastGPGGA = time.time()
+                        if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                            mSR.GPSGPRMC2Write(dataString,dateTime)
+                            lastGPRMC = time.time()
+                        if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGPGGA,delta)):
+                            mSR.GPSGPGGA2Write(dataString,dateTime)
+                            lastGPGGA = time.time()
+                        if (dataString.startswith("$GNRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                            mSR.GPSGPRMC2Write(dataString,dateTime)
+                            lastGPRMC = time.time()                    
+                        line = []
+                        break
+
+            
             if as7265xOnline and mSR.getDeltaTimeAM(as7265xReadTime,delta):
                 as7265xReadTime  = time.time()
                 as7265x.readMqtt();
+            
             if bme280Online and mSR.getDeltaTimeAM(bme280ReadTime,delta):
                 bme280ReadTime  = time.time()                
                 bme280.readMqtt();
+            
             if pa101dOnline and mSR.getDeltaTimeAM(pa101dGGAReadTime,delta):
                 pa101dReadTime  = time.time()
                 pa101d.readMqtt("GGA");                        
+            
             if scd30Online and mSR.getDeltaTimeAM(scd30ReadTime,delta):
                 scd30.readMqtt();
                 scd30ReadTime  = time.time()
+
             if pa101dOnline and mSR.getDeltaTimeAM(pa101dRMCReadTime,delta):
                 pa101dReadTime  = time.time()
                 pa101d.readMqtt("RMC");            
