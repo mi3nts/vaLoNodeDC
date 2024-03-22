@@ -146,7 +146,8 @@ if __name__ == "__main__":
                 except Exception as e:
                     time.sleep(.5)
                     line = []
-                    print ("Error and type: %s - %s." % (e,type(e)))
+                    print ("USB GPS Error and type: %s - %s." % (e,type(e)))
+                    print(dataString)
                     time.sleep(.5)
         
                               
