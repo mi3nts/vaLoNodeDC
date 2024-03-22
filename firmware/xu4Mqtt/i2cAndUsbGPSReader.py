@@ -116,6 +116,7 @@ if __name__ == "__main__":
     pa101dGGAReadTime  = time.time()
     pa101dRMCReadTime  = time.time()    
 
+
     while True:
         try:
             if usbGPSAvailability:        
