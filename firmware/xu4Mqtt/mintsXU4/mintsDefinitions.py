@@ -26,7 +26,26 @@ def findAirmarPort():
         if(currentPort.find("PID=10C4:EA60 SER=0001")>=0):
             ozonePort.append(str(p[0]).split(" ")[0])
     return ozonePort
-  
+
+def findUSBRG15Port():
+    ports = list(serial.tools.list_ports.comports())
+    ozonePort = []
+    for p in ports:
+        currentPort = str(p[1])
+        if(currentPort.find("CP2102 USB to UART Bridge Controller")>=0):
+            ozonePort.append(str(p[0]).split(" ")[0])
+    return ozonePort
+
+
+def findUSBGPSPort():
+    ports = list(serial.tools.list_ports.comports())
+    ozonePort = []
+    for p in ports:
+        currentPort = str(p[1])
+        if(currentPort.find("u-blox GNSS receiver")>=0):
+            ozonePort.append(str(p[0]).split(" ")[0])
+    return ozonePort
+
 
 def findMacAddress():
     macAddress= get_mac_address(interface="eth0")
@@ -57,8 +76,9 @@ dataFolderMQTT            = "/home/teamlary/mintsData/rawMQTT"
 dataFolderTmp             = "/home/teamlary/mintsDataTmp"
 
 ipsPorts              = findIPSPorts()
+USBRG15Port           = findUSBRG15Port()
+USBGPSPort            = findUSBRG15Port()
 
-show2Port             = findPort("CP2104 USB to UART Bridge Controller")
 macAddress            = findMacAddress()
 latestDisplayOn       = False
 latestOn              = False
@@ -78,7 +98,6 @@ if __name__ == "__main__":
     print("Mac Address                : {0}".format(macAddress))
     print("Data Folder Reference      : {0}".format(dataFolderReference))
     print("Data Folder Raw            : {0}".format(dataFolder))
-    print("Airmar Port                : {0}".format(airmarPort))
     print("Latest On                  : {0}".format(latestOn))
     print("MQTT On                    : {0}".format(mqttOn))
     print("MQTT Credentials File      : {0}".format(mqttCredentialsFile))
@@ -87,3 +106,6 @@ if __name__ == "__main__":
     print("IPS Ports :")
     for dev in ipsPorts:
         print("\t{0}".format(dev))
+        
+    print("USB RG15 Port              : {0}".format(USBRG15Port))        
+    print("USB GPS Port               : {0}".format(USBGPSPort))        
