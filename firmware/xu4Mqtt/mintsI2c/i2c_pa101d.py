@@ -88,7 +88,7 @@ class PAI101D_:
                 # print("Data String Reading")
                 dataString = self.gps.read_sentence()
                 # print(dataString)
-                print("-------------------")
+                # print("-------------------")
                 if dataString.find(strExpected) >0:
                     dateTime  = datetime.datetime.now()
                     dataStringPost = dataString.replace('\n', '')
