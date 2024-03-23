@@ -44,29 +44,33 @@ def on_publish(client, userdata, result):
 
 def connect(mqtt_client, mqtt_username, mqtt_password, broker_endpoint, port):
     global connected
+    try:
+        if not mqtt_client.is_connected():
+            print("Reconnecting")
+            mqtt_client.username_pw_set(mqtt_username, password=mqtt_password)
+            mqtt_client.on_connect = on_connect
+            mqtt_client.on_publish = on_publish
+            mqtt_client.tls_set(ca_certs=tlsCert, certfile=None,
+                                keyfile=None, cert_reqs=ssl.CERT_REQUIRED,
+                                tls_version=ssl.PROTOCOL_TLSv1_2, ciphers=None)
+            mqtt_client.tls_insecure_set(False)
+            mqtt_client.connect(broker_endpoint, port=port)
+            mqtt_client.loop_start()
 
-    if not mqtt_client.is_connected():
-        print("Reconnecting")
-        mqtt_client.username_pw_set(mqtt_username, password=mqtt_password)
-        mqtt_client.on_connect = on_connect
-        mqtt_client.on_publish = on_publish
-        mqtt_client.tls_set(ca_certs=tlsCert, certfile=None,
-                            keyfile=None, cert_reqs=ssl.CERT_REQUIRED,
-                            tls_version=ssl.PROTOCOL_TLSv1_2, ciphers=None)
-        mqtt_client.tls_insecure_set(False)
-        mqtt_client.connect(broker_endpoint, port=port)
-        mqtt_client.loop_start()
+            attempts = 0
 
-        attempts = 0
+            while not connected and attempts < 5:  # Wait for connection
+                print(connected)
+                print("Attempting to connect...")
+                time.sleep(1)
+                attempts += 1
 
-        while not connected and attempts < 5:  # Wait for connection
-            print(connected)
-            print("Attempting to connect...")
-            time.sleep(1)
-            attempts += 1
-
-    if not connected:
-        print("[ERROR] Could not connect to broker")
+        if not connected:
+            print("[ERROR] Could not connect to broker")
+            return False
+    
+    except Exception as e:
+        print(e)
         return False
 
     return True
