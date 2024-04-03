@@ -20,13 +20,13 @@ sleep 5
 
 kill $(pgrep -f 'python3 rg15Reader.py')  
 sleep 5
-python3 rg15Reader.py
+python3 rg15Reader.py &
 sleep 5
 
 
 kill $(pgrep -f 'python3 rg15USBReader.py')  
 sleep 5
-python3 rg15USBReader.py
+python3 rg15USBReader.py &
 sleep 5
 
 
