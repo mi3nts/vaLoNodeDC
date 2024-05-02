@@ -64,6 +64,7 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
        mL.writeMQTTLatest(sensorDictionary,sensorName)   
 
     print("-----------------------------------")
+    print("-----------------------------------")
     print(sensorName)
     print(sensorDictionary)
     
@@ -123,6 +124,11 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     #     print('Note: Not IPS7100 or climateDataDic is empty')
 
 # FOR HUMIDITY CORRECTION
+    print()
+    print("-----------------END------------------")
+    print("-----------------END------------------")
+    print()
+
 
 def humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidity, temperature, dewPoint):
     pc0_1 = float(pc0_1)
