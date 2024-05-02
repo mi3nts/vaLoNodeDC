@@ -92,6 +92,12 @@ mqttPort              =  8883  # Secure port
 gpsPort               = findPort("GPS/GNSS Receiver")
 
 
+# For Humidity Corrections
+pmSensor      = "IPS7100"
+climateSensor = "BME280V2"
+modelFile     = 'mintsXU4/climateCorrectionModel.joblib'
+
+
 if __name__ == "__main__":
     # the following code is for debugging
     # to make sure everything is working run python3 mintsDefinitions.py 
