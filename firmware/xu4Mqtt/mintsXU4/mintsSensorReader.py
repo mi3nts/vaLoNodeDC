@@ -71,70 +71,70 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print(sensorDictionary)
     
     # For Humidity Correction
-    if sensorName ==  climateSensor:
-        keepClimateData(dateTime,sensorName,sensorDictionary)
+    # if sensorName ==  climateSensor:
+    #     keepClimateData(dateTime,sensorName,sensorDictionary)
 
-    if sensorName == pmSensor:
-        # At this point load up the climate sensor 
+    # if sensorName == pmSensor:
+    #     # At this point load up the climate sensor 
 
-        # No Date Time Comparison done for Climate Data 
+    #     # No Date Time Comparison done for Climate Data 
 
-        # dateTime    = sensorDictionary['dateTime']
-        climateData   =  loadJSONLatestClimate(climateSensor)
-        print("Latest Climate data")
-        print(climateData)
+    #     # dateTime    = sensorDictionary['dateTime']
+    #     climateData   =  loadJSONLatestClimate(climateSensor)
+    #     print("Latest Climate data")
+    #     print(climateData)
     
-        pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0 = sensorDictionary['pc0_1'], sensorDictionary['pc0_3'], sensorDictionary['pc0_5'], sensorDictionary['pc1_0'], sensorDictionary['pc2_5'], sensorDictionary['pc5_0'], sensorDictionary['pc10_0']
-        humidity, temperature, dewPoint, pressure        = climateData['humidity'], climateData['temperature'], climateData['dewPoint'], climateData['pressure']
-        foggy = float(temperature) - float(dewPoint)
+    #     pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0 = sensorDictionary['pc0_1'], sensorDictionary['pc0_3'], sensorDictionary['pc0_5'], sensorDictionary['pc1_0'], sensorDictionary['pc2_5'], sensorDictionary['pc5_0'], sensorDictionary['pc10_0']
+    #     humidity, temperature, dewPoint, pressure        = climateData['humidity'], climateData['temperature'], climateData['dewPoint'], climateData['pressure']
+    #     foggy = float(temperature) - float(dewPoint)
 
-        print("Fog Comparison")
-        print(foggy)
+    #     print("Fog Comparison")
+    #     print(foggy)
 
 
 
-        print("Obtaining Corrected PC")
-        cor_pc0_1, cor_pc0_3, cor_pc0_5, cor_pc1_0, cor_pc2_5, cor_pc5_0, cor_pc10_0, humidity, temperature, dewPoint  = \
-            humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidity, temperature, dewPoint)
+    #     print("Obtaining Corrected PC")
+    #     cor_pc0_1, cor_pc0_3, cor_pc0_5, cor_pc1_0, cor_pc2_5, cor_pc5_0, cor_pc10_0, humidity, temperature, dewPoint  = \
+    #         humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidity, temperature, dewPoint)
         
-        print("Humidity Corrected PC")
-        print(cor_pc0_1, cor_pc0_3, cor_pc0_5, cor_pc1_0, cor_pc2_5, cor_pc5_0, cor_pc10_0, humidity, temperature, dewPoint)
+    #     print("Humidity Corrected PC")
+    #     print(cor_pc0_1, cor_pc0_3, cor_pc0_5, cor_pc1_0, cor_pc2_5, cor_pc5_0, cor_pc10_0, humidity, temperature, dewPoint)
     
-        m0_1 = 8.355696123812269e-07
-        m0_3 = 2.2560825222215327e-05
-        m0_5 = 0.00010446111749483851
-        m1_0 = 0.0008397941861044865
-        m2_5 = 0.013925696906339288
-        m5_0 = 0.12597702778750686
-        m10_0 = 1.0472
+    #     m0_1 = 8.355696123812269e-07
+    #     m0_3 = 2.2560825222215327e-05
+    #     m0_5 = 0.00010446111749483851
+    #     m1_0 = 0.0008397941861044865
+    #     m2_5 = 0.013925696906339288
+    #     m5_0 = 0.12597702778750686
+    #     m10_0 = 1.0472
 
-        cor_pm0_1 = m0_1*cor_pc0_1
-        cor_pm0_3 = cor_pm0_1 + m0_3*cor_pc0_3
-        cor_pm0_5 = cor_pm0_3 + m0_5*cor_pc0_5
-        cor_pm1_0 = cor_pm0_5 + m1_0*cor_pc1_0
-        cor_pm2_5 = cor_pm1_0 + m2_5*cor_pc2_5
-        cor_pm5_0 = cor_pm2_5 + m5_0*cor_pc5_0
-        cor_pm10_0 = cor_pm5_0 + m10_0*cor_pc10_0
+    #     cor_pm0_1 = m0_1*cor_pc0_1
+    #     cor_pm0_3 = cor_pm0_1 + m0_3*cor_pc0_3
+    #     cor_pm0_5 = cor_pm0_3 + m0_5*cor_pc0_5
+    #     cor_pm1_0 = cor_pm0_5 + m1_0*cor_pc1_0
+    #     cor_pm2_5 = cor_pm1_0 + m2_5*cor_pc2_5
+    #     cor_pm5_0 = cor_pm2_5 + m5_0*cor_pc5_0
+    #     cor_pm10_0 = cor_pm5_0 + m10_0*cor_pc10_0
 
-        print("Humidity Corrected PM")
-        print(cor_pm0_1, cor_pm0_3, cor_pm0_5, cor_pm1_0, cor_pm2_5, cor_pm5_0, cor_pm10_0, humidity, temperature, dewPoint)
+    #     print("Humidity Corrected PM")
+    #     print(cor_pm0_1, cor_pm0_3, cor_pm0_5, cor_pm1_0, cor_pm2_5, cor_pm5_0, cor_pm10_0, humidity, temperature, dewPoint)
 
-        ##### ML humidity correction #############################
-        #predictors = ['cor_pm2_5', 'temperature', 'pressure', 'humidity', 'dewPoint', 'altitude']
-        data = {'cor_pm2_5': [float(cor_pm2_5)], 'temperature': [float(temperature)], 'pressure': [pressure], 'humidity':[humidity], 'dewPoint':[dewPoint], 'temp_dew':[foggy]}
-        #data = {'cor_pm2_5': [float(cor_pm2_5)], 'temperature': [float(temperature)]}
-        df = pd.DataFrame(data)
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        print(df)
-        predicted_train_valid2 = make_prediction2(loaded_humidModel, df)
-        ML_pm2_5 = predicted_train_valid2["Predictions"][0]
+    #     ##### ML humidity correction #############################
+    #     #predictors = ['cor_pm2_5', 'temperature', 'pressure', 'humidity', 'dewPoint', 'altitude']
+    #     data = {'cor_pm2_5': [float(cor_pm2_5)], 'temperature': [float(temperature)], 'pressure': [pressure], 'humidity':[humidity], 'dewPoint':[dewPoint], 'temp_dew':[foggy]}
+    #     #data = {'cor_pm2_5': [float(cor_pm2_5)], 'temperature': [float(temperature)]}
+    #     df = pd.DataFrame(data)
+    #     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    #     print(df)
+    #     predicted_train_valid2 = make_prediction2(loaded_humidModel, df)
+    #     ML_pm2_5 = predicted_train_valid2["Predictions"][0]
 
 
-        corr_data = {'ori_pm2_5': sensorDictionary['pm2_5'], 'HG_pm2_5': cor_pm2_5, 'HG_ML_pm2_5': ML_pm2_5}
-        print(corr_data)
+    #     corr_data = {'ori_pm2_5': sensorDictionary['pm2_5'], 'HG_pm2_5': cor_pm2_5, 'HG_ML_pm2_5': ML_pm2_5}
+    #     print(corr_data)
 
-    else:
-        print('Note: Not IPS7100 or climateDataDic is empty')
+    # else:
+    #     print('Note: Not IPS7100 or climateDataDic is empty')
 
 # FOR HUMIDITY CORRECTION
     print()
