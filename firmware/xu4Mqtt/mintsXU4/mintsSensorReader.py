@@ -49,8 +49,8 @@ import joblib
 climateSensor =  mD.climateSensor
 pmSensor      =  mD.pmSensor
 
-
-loaded_humidModel = joblib.load("/home/teamlary/Prabu/analysis/HumidCorr_onSensor/humidCorr_model/_impl_sensor.joblib")
+modelFile     = mD.modelFile
+loaded_humidModel = joblib.load(modelFile)
     
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
