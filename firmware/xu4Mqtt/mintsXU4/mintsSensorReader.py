@@ -278,6 +278,7 @@ def humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidit
 def writeJSONLatestClimate(sensorDictionary,sensorName):
     directoryIn  = dataFolderTmp+"/"+macAddress+"/"+sensorName+".json"
     print(directoryIn)
+    directoryCheck(directoryIn)
     try:
         with open(directoryIn,'w') as fp:
             json.dump(sensorDictionary, fp)
