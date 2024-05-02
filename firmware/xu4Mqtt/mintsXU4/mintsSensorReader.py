@@ -155,7 +155,9 @@ def humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidit
     dew = float(dewPoint)
     T_D = tem - dew
 
-    if hum > 40 and T_D < 2.5:
+    print(T_D)
+    if hum > 40 and T_D < 50:
+    # if hum > 40 and T_D < 2.5:
         print('Condition is satisfied')
         data = {'count': [pc0_1, None, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, None],
             'D_range': [50, 20, 200, 200, 500, 1500, 2500, 5000, None],
@@ -284,8 +286,10 @@ def humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidit
         pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0 = df1['cor_count'][0], df1['cor_count'][2], df1['cor_count'][3], df1['cor_count'][4], df1['cor_count'][5], df1['cor_count'][6], df1['cor_count'][7]
     else:
         print('Condition is not satisfied')
-
     return pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, hum, tem, dew
+
+
+
 def writeJSONLatestClimate(sensorDictionary,sensorName):
     directoryIn  = dataFolderTmp+"/"+macAddress+"/"+sensorName+".json"
     print(directoryIn)
