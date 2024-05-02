@@ -49,8 +49,8 @@ debug  = False
 
 
 dataFolder = mD.dataFolder
-gpsPort    =  mD.USBGPSPort
-baudRate  = 9600
+gpsPort    = mD.USBGPSPort
+baudRate   = 9600
 
 
 
@@ -101,9 +101,12 @@ if __name__ == "__main__":
     print("============ MINTS I2C + USB GPS Reader ============")
     print()
     
-
-    usbGPSAvailability,serialConnection  = is_serial_port_open(gpsPort[0])
-
+    try:
+        usbGPSAvailability,serialConnection  = is_serial_port_open(gpsPort[0])
+    except:
+        usbGPSAvailability = False
+        ser = []
+    
     # I2C Devices 
     as7265xOnline  =  as7265x.initiate()
     as7265xReadTime  = time.time()
