@@ -29,12 +29,18 @@ import netifaces as ni
 import math
 
 
-macAddress     = mD.macAddress
-dataFolder     = mD.dataFolder
-latestDisplayOn= mD.latestDisplayOn
-dataFolderMQTT = mD.dataFolderMQTT
-latestOn       = mD.latestOn
-mqttOn         = mD.mqttOn
+macAddress      = mD.macAddress
+dataFolder      = mD.dataFolder
+latestDisplayOn = mD.latestDisplayOn
+dataFolderMQTT  = mD.dataFolderMQTT
+latestOn        = mD.latestOn
+mqttOn          = mD.mqttOn
+
+
+# In order to apply corrections, the sensor finisher code needs to be updated
+#    1) The YAML file should have a Climate Sensor and a PM sensor - May be the model location
+#    2) It needs to keep a record of the intended Climate sensor
+#    3) It needs to have an updated sensor generate a copy of the updated data 
 
 
 
@@ -54,6 +60,11 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print("-----------------------------------")
     print(sensorName)
     print(sensorDictionary)
+    
+    # For Humidity Correction
+      
+
+
 
 
 def sensorFinisherReference(dateTime,sensorName,sensorDictionary):
