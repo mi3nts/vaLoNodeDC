@@ -81,30 +81,30 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
         climateData   =  loadJSONLatestClimate(climateSensor)
         print(climateData)
     
-        # pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0 = sensorDictionary['pc0_1'], sensorDictionary['pc0_3'], sensorDictionary['pc0_5'], sensorDictionary['pc1_0'], sensorDictionary['pc2_5'], sensorDictionary['pc5_0'], sensorDictionary['pc10_0']
-        # humidity, temperature, dewPoint, pressure        = climateData['humidity'], climateData['temperature'], climateData['dewPoint'], climateData['pressure']
-        # foggy = float(temperature) - float(dewPoint)
-        # print(humidity, temperature, dewPoint, pressure, foggy)
+        pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0 = sensorDictionary['pc0_1'], sensorDictionary['pc0_3'], sensorDictionary['pc0_5'], sensorDictionary['pc1_0'], sensorDictionary['pc2_5'], sensorDictionary['pc5_0'], sensorDictionary['pc10_0']
+        humidity, temperature, dewPoint, pressure        = climateData['humidity'], climateData['temperature'], climateData['dewPoint'], climateData['pressure']
+        foggy = float(temperature) - float(dewPoint)
+        print(humidity, temperature, dewPoint, pressure, foggy)
 
-        # cor_pc0_1, cor_pc0_3, cor_pc0_5, cor_pc1_0, cor_pc2_5, cor_pc5_0, cor_pc10_0, humidity, temperature, dewPoint  = \
-        #     humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidity, temperature, dewPoint)
+        cor_pc0_1, cor_pc0_3, cor_pc0_5, cor_pc1_0, cor_pc2_5, cor_pc5_0, cor_pc10_0, humidity, temperature, dewPoint  = \
+            humidityCorrection(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidity, temperature, dewPoint)
         
-        # m0_1 = 8.355696123812269e-07
-        # m0_3 = 2.2560825222215327e-05
-        # m0_5 = 0.00010446111749483851
-        # m1_0 = 0.0008397941861044865
-        # m2_5 = 0.013925696906339288
-        # m5_0 = 0.12597702778750686
-        # m10_0 = 1.0472
+        m0_1 = 8.355696123812269e-07
+        m0_3 = 2.2560825222215327e-05
+        m0_5 = 0.00010446111749483851
+        m1_0 = 0.0008397941861044865
+        m2_5 = 0.013925696906339288
+        m5_0 = 0.12597702778750686
+        m10_0 = 1.0472
 
-        # cor_pm0_1 = m0_1*cor_pc0_1
-        # cor_pm0_3 = cor_pm0_1 + m0_3*cor_pc0_3
-        # cor_pm0_5 = cor_pm0_3 + m0_5*cor_pc0_5
-        # cor_pm1_0 = cor_pm0_5 + m1_0*cor_pc1_0
-        # cor_pm2_5 = cor_pm1_0 + m2_5*cor_pc2_5
-        # cor_pm5_0 = cor_pm2_5 + m5_0*cor_pc5_0
-        # cor_pm10_0 = cor_pm5_0 + m10_0*cor_pc10_0
-        # print(cor_pm0_1, cor_pm0_3, cor_pm0_5, cor_pm1_0, cor_pm2_5, cor_pm5_0, cor_pm10_0)
+        cor_pm0_1 = m0_1*cor_pc0_1
+        cor_pm0_3 = cor_pm0_1 + m0_3*cor_pc0_3
+        cor_pm0_5 = cor_pm0_3 + m0_5*cor_pc0_5
+        cor_pm1_0 = cor_pm0_5 + m1_0*cor_pc1_0
+        cor_pm2_5 = cor_pm1_0 + m2_5*cor_pc2_5
+        cor_pm5_0 = cor_pm2_5 + m5_0*cor_pc5_0
+        cor_pm10_0 = cor_pm5_0 + m10_0*cor_pc10_0
+        print(cor_pm0_1, cor_pm0_3, cor_pm0_5, cor_pm1_0, cor_pm2_5, cor_pm5_0, cor_pm10_0)
 
     #     ##### ML humidity correction #############################
     #     #predictors = ['cor_pm2_5', 'temperature', 'pressure', 'humidity', 'dewPoint', 'altitude']
