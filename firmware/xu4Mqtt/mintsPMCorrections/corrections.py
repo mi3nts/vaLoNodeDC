@@ -47,11 +47,12 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
     print("Mints Prediction")
     # For Humidity Correction
     if sensorID ==  climateSensor:
+        print("Climate data read")
         keepClimateData(dateTime,sensorID,sensorDictionary)
 
     if sensorID == pmSensor:
         # At this point load up the climate sensor 
-
+        print("PM data read")
         dateTime        = dateTime
         climateData     = loadJSONLatestClimate(climateSensor)
         dateTimeClimate = datetime(climateData['dateTime'])
