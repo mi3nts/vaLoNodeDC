@@ -29,7 +29,7 @@ import netifaces as ni
 import math
 import json
 import pandas as pd 
-
+from mintsPMCorrections import corrections as mC
 
 macAddress      = mD.macAddress
 dataFolder      = mD.dataFolder
@@ -43,9 +43,9 @@ dataFolderTmp   = mD.dataFolderTmp
 
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
-    #Getting Write Path
+    print("-----------------------------------")
+    print(sensorName)
     writePath = getWritePath(sensorName,dateTime)
-
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
@@ -55,9 +55,8 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
        mL.writeMQTTLatest(sensorDictionary,sensorName)   
 
     print("-----------------------------------")
-    print("-----------------------------------")
-    print(sensorName)
-    print(sensorDictionary)
+    
+    mC.doPrediction(sensorName,sensorDictionary,dateTime)
     
 
     print("-----------------END------------------")
