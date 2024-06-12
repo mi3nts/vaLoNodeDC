@@ -44,6 +44,7 @@ dataFolderTmp   = mD.dataFolderTmp
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print("-----------------------------------")
+    print("-------- Sensor Finisher ----------")
     print(sensorName)
     writePath = getWritePath(sensorName,dateTime)
     exists = directoryCheck(writePath)

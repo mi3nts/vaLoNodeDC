@@ -44,8 +44,8 @@ modelFile         = mD.modelFile
 loaded_humidModel = joblib.load(modelFile)
     
 def doPrediction(sensorID,sensorDictionary,dateTime):
-    print("Mints Prediction")
-    # For Humidity Correction
+    print("-----------------------------------")
+    print("------- Humidity Correctiom -------")
     climateNullValidity     = 0
     climateDateTimeValidity = 0
     climateValidity         = 0
