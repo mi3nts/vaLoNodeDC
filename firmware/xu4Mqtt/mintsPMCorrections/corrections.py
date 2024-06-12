@@ -312,15 +312,15 @@ def humidityCorrectedPC(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidi
     df1['N/D'] = df1['count']/df1['D_range']
 
     df1['height_ini'] = 0
-    df1['height_ini'][7] = (2*df1['count'][7])/5000
-    df1['height_ini'][6] = (2*df1['count'][6])/2500 - df1['height_ini'][7]
-    df1['height_ini'][5] = (2*df1['count'][5])/1500 - df1['height_ini'][6]
-    df1['height_ini'][4] = (2*df1['count'][4])/500 - df1['height_ini'][5]
-    df1['height_ini'][3] = (2*df1['count'][3])/200 - df1['height_ini'][4]
-    df1['height_ini'][2] = (2*df1['count'][2])/200 - df1['height_ini'][3]
-    df1['height_ini'][0] = (2*df1['count'][0])/50 - df1['height_ini'][2]
-    df1['height_ini'][1] = (20*(df1['height_ini'][0]-df1['height_ini'][2])/50) + df1['height_ini'][2]
-    df1['count'][1] = 0.5*(df1['height_ini'][1]+df1['height_ini'][2])*20
+    df1.loc[7, 'height_ini'] = (2*df1.loc[7, 'count'])/5000
+    df1.loc[6, 'height_ini'] = (2*df1.loc[6, 'count'])/2500 - df1.loc[7, 'height_ini']
+    df1.loc[5, 'height_ini'] = (2*df1.loc[5, 'count'])/1500 - df1.loc[6, 'height_ini']
+    df1.loc[4, 'height_ini'] = (2*df1.loc[4, 'count'])/500 - df1.loc[5, 'height_ini']
+    df1.loc[3, 'height_ini'] = (2*df1.loc[3, 'count'])/200 - df1.loc[4, 'height_ini']
+    df1.loc[2, 'height_ini'] = (2*df1.loc[2, 'count'])/200 - df1.loc[3, 'height_ini']
+    df1.loc[0, 'height_ini'] = (2*df1.loc[0, 'count'])/50 - df1.loc[2, 'height_ini']
+    df1.loc[1, 'height_ini'] = (20*(df1.loc[0, 'height_ini']-df1.loc[2, 'height_ini'])/50) + df1.loc[2, 'height_ini']
+    df1.loc[1, 'count'] = 0.5*(df1.loc[1, 'height_ini']+df1.loc[2, 'height_ini'])*20
 
     RH = (hum) * 0.7
     RH = 98 if RH >= 99 else RH
@@ -329,14 +329,15 @@ def humidityCorrectedPC(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidi
 
     df1['D_dry_range'] = df1['D_dry_point'].diff().shift(-1)
 
+
     df1['fit_height_ini'] = 0
-    df1['fit_height_ini'][7] = (2*df1['count'][7])/df1['D_dry_range'][7]
-    df1['fit_height_ini'][6] = (2*df1['count'][6])/df1['D_dry_range'][6] - df1['fit_height_ini'][7]
-    df1['fit_height_ini'][5] = (2*df1['count'][5])/df1['D_dry_range'][5] - df1['fit_height_ini'][6]
-    df1['fit_height_ini'][4] = (2*df1['count'][4])/df1['D_dry_range'][4] - df1['fit_height_ini'][5]
-    df1['fit_height_ini'][3] = (2*df1['count'][3])/df1['D_dry_range'][3] - df1['fit_height_ini'][4]
-    df1['fit_height_ini'][2] = (2*df1['count'][2])/df1['D_dry_range'][2] - df1['fit_height_ini'][3]
-    df1['fit_height_ini'][1] = (2*df1['count'][1])/df1['D_dry_range'][1] - df1['fit_height_ini'][2]
+    df1.loc[7, 'fit_height_ini'] = (2*df1.loc[7, 'count'])/df1.loc[7, 'D_dry_range']
+    df1.loc[6, 'fit_height_ini'] = (2*df1.loc[6, 'count'])/df1.loc[6, 'D_dry_range'] - df1.loc[7, 'fit_height_ini']
+    df1.loc[5, 'fit_height_ini'] = (2*df1.loc[5, 'count'])/df1.loc[5, 'D_dry_range'] - df1.loc[6, 'fit_height_ini']
+    df1.loc[4, 'fit_height_ini'] = (2*df1.loc[4, 'count'])/df1.loc[4, 'D_dry_range'] - df1.loc[5, 'fit_height_ini']
+    df1.loc[3, 'fit_height_ini'] = (2*df1.loc[3, 'count'])/df1.loc[3, 'D_dry_range'] - df1.loc[4, 'fit_height_ini']
+    df1.loc[2, 'fit_height_ini'] = (2*df1.loc[2, 'count'])/df1.loc[2, 'D_dry_range'] - df1.loc[3, 'fit_height_ini']
+    df1.loc[1, 'fit_height_ini'] = (2*df1.loc[1, 'count'])/df1.loc[1, 'D_dry_range'] - df1.loc[2, 'fit_height_ini']
 
     df1['slope'] = (df1['fit_height_ini'].shift(-1) - df1['fit_height_ini']) / df1['D_dry_range']
     df1['interc'] = df1['fit_height_ini'] - df1['slope'] * df1['D_dry_point']
@@ -344,125 +345,93 @@ def humidityCorrectedPC(pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, humidi
     df1['cor_height'] = None
     df1['cor_count'] = 0
 
-    if df1['D_dry_point'][8] > 5000:
-        df1['cor_height'][7] = df1['slope'][7]*5000 + df1['interc'][7]
-        df1['cor_count'][7] = 0.5*df1['cor_height'][7]*(df1['D_dry_point'][8]-5000)
+    if df1.loc[8, 'D_dry_point'] > 5000:
+        df1.loc[7, 'cor_height'] = df1.loc[7, 'slope']*5000 + df1.loc[7, 'interc']
+        df1.loc[7, 'cor_count'] = 0.5*df1.loc[7, 'cor_height']*(df1.loc[8, 'D_dry_point']-5000)
     else:
-        df1['cor_height'][7] = 0
-        df1['cor_count'][7] = 0
+        df1.loc[7, 'cor_height'] = 0
+        df1.loc[7, 'cor_count'] = 0
     
-    if (2500<df1['D_dry_point'][7]<=5000)&(df1['D_dry_point'][8]>5000):
-        df1['cor_height'][6] = df1['slope'][6]*2500 + df1['interc'][6]
-        df1['cor_count'][6] = \
-                (0.5*(df1['cor_height'][7]+df1['fit_height_ini'][7])*(5000-df1['D_dry_point'][7])) +\
-                (0.5*(df1['cor_height'][6]+df1['fit_height_ini'][7])*(df1['D_dry_point'][7]-2500))
-        
-    elif (2500<df1['D_dry_point'][7]<5000)&(df1['D_dry_point'][8]<5000):
-        df1['cor_height'][6] = df1['slope'][6]*2500 + df1['interc'][6]
-        df1['cor_count'][6] = \
-                (0.5*(df1['cor_height'][6]+df1['fit_height_ini'][7])*(df1['D_dry_point'][7]-2500)) + \
-                (0.5*df1['fit_height_ini'][7]*(df1['D_dry_point'][8]-df1['D_dry_point'][7]))
+    if (2500<df1.loc[7, 'D_dry_point']<=5000)&(df1.loc[8, 'D_dry_point']>5000):
+        df1.loc[6, 'cor_height'] = df1.loc[6, 'slope']*2500 + df1.loc[6, 'interc']
+        df1.loc[6, 'cor_count'] = (0.5*(df1.loc[7, 'cor_height']+df1.loc[7, 'fit_height_ini'])*(5000-df1.loc[7, 'D_dry_point'])) + (0.5*(df1.loc[6, 'cor_height']+df1.loc[7, 'fit_height_ini'])*(df1.loc[7, 'D_dry_point']-2500))
+    elif (2500<df1.loc[7, 'D_dry_point']<5000)&(df1.loc[8, 'D_dry_point']<5000):
+        df1.loc[6, 'cor_height'] = df1.loc[6, 'slope']*2500 + df1.loc[6, 'interc']
+        df1.loc[6, 'cor_count'] = (0.5*(df1.loc[6, 'cor_height']+df1.loc[7, 'fit_height_ini'])*(df1.loc[7, 'D_dry_point']-2500)) + (0.5*df1.loc[7, 'fit_height_ini']*(df1.loc[8, 'D_dry_point']-df1.loc[7, 'D_dry_point']))
+    elif (df1.loc[7, 'D_dry_point']<2500)&(df1.loc[8, 'D_dry_point']<5000):
+        df1.loc[6, 'cor_height'] = df1.loc[7, 'slope']*2500 + df1.loc[7, 'interc']
+        df1.loc[6, 'cor_count'] = (0.5*df1.loc[6, 'cor_height'])*(df1.loc[8, 'D_dry_point']-2500)
+    else:
+        df1.loc[6, 'cor_height'] = df1.loc[7, 'slope']*2500 + df1.loc[7, 'interc']
+        df1.loc[6, 'cor_count'] = 0.5*(df1.loc[7, 'cor_height']+df1.loc[6, 'cor_height'])*2500
     
-    elif (df1['D_dry_point'][7]<2500)&(df1['D_dry_point'][8]<5000):
-        df1['cor_height'][6] = df1['slope'][7]*2500 + df1['interc'][7]
-        df1['cor_count'][6]  = (0.5*df1['cor_height'][6])*(df1['D_dry_point'][8]-2500)
+    if (1000<df1.loc[6, 'D_dry_point']<=2500)&(df1.loc[7, 'D_dry_point']>2500):
+        df1.loc[5, 'cor_height'] = df1.loc[5, 'slope']*1000 + df1.loc[5, 'interc']
+        df1.loc[5, 'cor_count'] = (0.5*(df1.loc[6, 'cor_height']+df1.loc[6, 'fit_height_ini'])*(2500-df1.loc[6, 'D_dry_point'])) + (0.5*(df1.loc[5, 'cor_height']+df1.loc[6, 'fit_height_ini'])*(df1.loc[6, 'D_dry_point']-1000))
+    elif (1000<df1.loc[6, 'D_dry_point']<2500)&(df1.loc[7, 'D_dry_point']<2500):
+        df1.loc[5, 'cor_height'] = df1.loc[5, 'slope']*1000 + df1.loc[5, 'interc']
+        df1.loc[5, 'cor_count'] = (0.5*(df1.loc[5, 'cor_height']+df1.loc[6, 'fit_height_ini'])*(df1.loc[6, 'D_dry_point']-1000)) + (0.5*(df1.loc[6,'fit_height_ini']+df1.loc[7,'fit_height_ini'])*(df1.loc[7,'D_dry_point']-df1.loc[6,'D_dry_point'])) + (0.5*(df1.loc[7,'fit_height_ini']+df1.loc[6,'cor_height'])*(2500-df1.loc[7,'D_dry_point']))
+    elif (df1.loc[6,'D_dry_point']<1000)&(df1.loc[7,'D_dry_point']<2500):
+        df1.loc[5,'cor_height'] = df1.loc[6,'slope']*1000 + df1.loc[6,'interc']
+        df1.loc[5,'cor_count'] = (0.5*(df1.loc[6,'cor_height']+df1.loc[7,'fit_height_ini'])*(2500-df1.loc[7,'D_dry_point'])) + (0.5*(df1.loc[5,'cor_height']+df1.loc[7,'fit_height_ini'])*(df1.loc[7,'D_dry_point']-1000))
     else:
-        df1['cor_height'][6] = df1['slope'][7]*2500 + df1['interc'][7]
-        df1['cor_count'][6]  = 0.5*(df1['cor_height'][7]+df1['cor_height'][6])*2500
+        df1.loc[5,'cor_height'] = df1.loc[6,'slope']*1000 + df1.loc[6,'interc']
+        df1.loc[5,'cor_count'] = 0.5*(df1.loc[6,'cor_height']+df1.loc[5,'cor_height'])*1500
+
+    if (500<df1.loc[5,'D_dry_point']<=1000)&(df1.loc[6,'D_dry_point']>1000):
+        df1.loc[4,'cor_height'] = df1.loc[4,'slope']*500 + df1.loc[4,'interc']
+        df1.loc[4,'cor_count'] = (0.5*(df1.loc[5,'cor_height']+df1.loc[5,'fit_height_ini'])*(1000-df1.loc[5,'D_dry_point'])) + (0.5*(df1.loc[4,'cor_height']+df1.loc[5,'fit_height_ini'])*(df1.loc[5,'D_dry_point']-500))
+    elif (500<df1.loc[5,'D_dry_point']<1000)&(df1.loc[6,'D_dry_point']<1000):
+        df1.loc[4,'cor_height'] = df1.loc[4,'slope']*500 + df1.loc[4,'interc']
+        df1.loc[4,'cor_count'] = (0.5*(df1.loc[4,'cor_height']+df1.loc[5,'fit_height_ini'])*(df1.loc[5,'D_dry_point']-500)) + (0.5*(df1.loc[5,'fit_height_ini']+df1.loc[6,'fit_height_ini'])*(df1.loc[6,'D_dry_point']-df1.loc[5,'D_dry_point'])) + (0.5*(df1.loc[6,'fit_height_ini']+df1.loc[5,'cor_height'])*(1000-df1.loc[6,'D_dry_point']))
+    elif (df1.loc[5,'D_dry_point']<500)&(df1.loc[6,'D_dry_point']<1000):
+        df1.loc[4,'cor_height'] = df1.loc[5,'slope']*500 + df1.loc[5,'interc']
+        df1.loc[4,'cor_count'] = (0.5*(df1.loc[5,'cor_height']+df1.loc[6,'fit_height_ini'])*(1000-df1.loc[6,'D_dry_point'])) + (0.5*(df1.loc[4,'cor_height']+df1.loc[6,'fit_height_ini'])*(df1.loc[6,'D_dry_point']-500))
+    else:
+        df1.loc[4,'cor_height'] = df1.loc[5,'slope']*500 + df1.loc[5,'interc']
+        df1.loc[4,'cor_count'] = 0.5*(df1.loc[5,'cor_height']+df1.loc[4,'cor_height'])*500
+
+    if (300<df1.loc[4,'D_dry_point']<=500)&(df1.loc[5,'D_dry_point']>500):
+        df1.loc[3,'cor_height'] = df1.loc[3,'slope']*300 + df1.loc[3,'interc']
+        df1.loc[3,'cor_count'] = (0.5*(df1.loc[4,'cor_height']+df1.loc[4,'fit_height_ini'])*(500-df1.loc[4,'D_dry_point'])) + (0.5*(df1.loc[3,'cor_height']+df1.loc[4,'fit_height_ini'])*(df1.loc[4,'D_dry_point']-300))
+    elif (300<df1.loc[4,'D_dry_point']<500)&(df1.loc[5,'D_dry_point']<500):
+        df1.loc[3,'cor_height'] = df1.loc[3,'slope']*300 + df1.loc[3,'interc']
+        df1.loc[3,'cor_count'] = (0.5*(df1.loc[3,'cor_height']+df1.loc[4,'fit_height_ini'])*(df1.loc[4,'D_dry_point']-300)) + (0.5*(df1.loc[4,'fit_height_ini']+df1.loc[5,'fit_height_ini'])*(df1.loc[5,'D_dry_point']-df1.loc[4,'D_dry_point'])) + (0.5*(df1.loc[5,'fit_height_ini']+df1.loc[4,'cor_height'])*(500-df1.loc[5,'D_dry_point']))
+    elif (df1.loc[4,'D_dry_point']<300)&(df1.loc[5,'D_dry_point']<500):
+        df1.loc[3,'cor_height'] = df1.loc[4,'slope']*300 + df1.loc[4,'interc']
+        df1.loc[3,'cor_count'] = (0.5*(df1.loc[4,'cor_height']+df1.loc[5,'fit_height_ini'])*(500-df1.loc[5,'D_dry_point'])) + (0.5*(df1.loc[3,'cor_height']+df1.loc[5,'fit_height_ini'])*(df1.loc[5,'D_dry_point']-300))
+    else:
+        df1.loc[3,'cor_height'] = df1.loc[4,'slope']*300 + df1.loc[4,'interc']
+        df1.loc[3,'cor_count'] = 0.5*(df1.loc[4,'cor_height']+df1.loc[3,'cor_height'])*200
+
+    if (100<df1.loc[3,'D_dry_point']<=300)&(df1.loc[4,'D_dry_point']>300):
+        df1.loc[2,'cor_height'] = df1.loc[2,'slope']*100 + df1.loc[2,'interc']
+        df1.loc[2,'cor_count'] = (0.5*(df1.loc[3,'cor_height']+df1.loc[3,'fit_height_ini'])*(300-df1.loc[3,'D_dry_point'])) + (0.5*(df1.loc[2,'cor_height']+df1.loc[3,'fit_height_ini'])*(df1.loc[3,'D_dry_point']-100))
+    elif (100<df1.loc[3,'D_dry_point']<300)&(df1.loc[4,'D_dry_point']<300):
+        df1.loc[2,'cor_height'] = df1.loc[2,'slope']*100 + df1.loc[2,'interc']
+        df1.loc[2,'cor_count'] = (0.5*(df1.loc[2,'cor_height']+df1.loc[3,'fit_height_ini'])*(df1.loc[3,'D_dry_point']-100)) + (0.5*(df1.loc[3,'fit_height_ini']+df1.loc[4,'fit_height_ini'])*(df1.loc[4,'D_dry_point']-df1.loc[3,'D_dry_point'])) + (0.5*(df1.loc[4,'fit_height_ini']+df1.loc[3,'cor_height'])*(300-df1.loc[4,'D_dry_point']))
+    elif (df1.loc[3,'D_dry_point']<100)&(df1.loc[4,'D_dry_point']<300):
+        df1.loc[2,'cor_height'] = df1.loc[3,'slope']*100 + df1.loc[3,'interc']
+        df1.loc[2,'cor_count'] = (0.5*(df1.loc[3,'cor_height']+df1.loc[4,'fit_height_ini'])*(300-df1.loc[4,'D_dry_point'])) + (0.5*(df1.loc[2,'cor_height']+df1.loc[4,'fit_height_ini'])*(df1.loc[4,'D_dry_point']-100))
+    else:
+        df1.loc[2,'cor_height'] = df1.loc[3,'slope']*100 + df1.loc[3,'interc']
+        df1.loc[2,'cor_count'] = 0.5*(df1.loc[3,'cor_height']+df1.loc[2,'cor_height'])*200
+
+    if (50<df1.loc[2,'D_dry_point']<=100)&(df1.loc[3,'D_dry_point']>100):
+        df1.loc[0,'cor_height'] = df1.loc[1,'slope']*50 + df1.loc[1,'interc']
+        df1.loc[0,'cor_count'] = (0.5*(df1.loc[2,'cor_height']+df1.loc[2,'fit_height_ini'])*(100-df1.loc[2,'D_dry_point'])) + (0.5*(df1.loc[0,'cor_height']+df1.loc[2,'fit_height_ini'])*(df1.loc[2,'D_dry_point']-50))
+    elif (50<df1.loc[2,'D_dry_point']<100)&(df1.loc[3,'D_dry_point']>100):
+        df1.loc[0,'cor_height'] = df1.loc[1,'slope']*50 + df1.loc[1,'interc']
+        df1.loc[0,'cor_count'] = (0.5*(df1.loc[0,'cor_height']+df1.loc[2,'fit_height_ini'])*(df1.loc[2,'D_dry_point']-50)) + (0.5*(df1.loc[2,'fit_height_ini']+df1.loc[3,'fit_height_ini'])*(df1.loc[3,'D_dry_point']-df1.loc[2,'D_dry_point'])) + (0.5*(df1.loc[3,'fit_height_ini']+df1.loc[2,'cor_height'])*(100-df1.loc[3,'D_dry_point']))
+    elif (df1.loc[2,'D_dry_point']<50)&(df1.loc[3,'D_dry_point']>100):
+        df1.loc[0,'cor_height'] = df1.loc[2,'slope']*50 + df1.loc[2,'interc']
+        df1.loc[0,'cor_count'] = (0.5*(df1.loc[2,'cor_height']+df1.loc[3,'fit_height_ini'])*(100-df1.loc[3,'D_dry_point'])) + (0.5*(df1.loc[0,'cor_height']+df1.loc[3,'fit_height_ini'])*(df1.loc[3,'D_dry_point']-50))
+    else:
+        df1.loc[0,'cor_height'] = df1.loc[2,'slope']*50 + df1.loc[2,'interc']
+        df1.loc[0,'cor_count'] = 0.5*(df1.loc[2,'cor_height']+df1.loc[0,'cor_height'])*50
+        
     
-    if (1000<df1['D_dry_point'][6]<=2500)&(df1['D_dry_point'][7]>2500):
-        df1['cor_height'][5] = df1['slope'][5]*1000 + df1['interc'][5]
-        df1['cor_count'][5] = \
-                    (0.5*(df1['cor_height'][6]+ \
-                    df1['fit_height_ini'][6])*(2500-df1['D_dry_point'][6])) + \
-                    (0.5*(df1['cor_height'][5]+df1['fit_height_ini'][6])*(df1['D_dry_point'][6]-1000))
-        
-    elif (1000<df1['D_dry_point'][6]<2500)&(df1['D_dry_point'][7]<2500):
-        df1['cor_height'][5] = df1['slope'][5]*1000 + df1['interc'][5]
-        df1['cor_count'][5] = \
-        (0.5*(df1['cor_height'][5]+df1['fit_height_ini'][6])*(df1['D_dry_point'][6]-1000)) +\
-        (0.5*(df1['fit_height_ini'][6]+df1['fit_height_ini'][7])*(df1['D_dry_point'][7]-df1['D_dry_point'][6])) + \
-        (0.5*(df1['fit_height_ini'][7]+df1['cor_height'][6])*(2500-df1['D_dry_point'][7]))
-        
-    elif (df1['D_dry_point'][6]<1000)&(df1['D_dry_point'][7]<2500):
-        df1['cor_height'][5] = df1['slope'][6]*1000 + df1['interc'][6]
-        df1['cor_count'][5] = (0.5*(df1['cor_height'][6]+ \
-                                    df1['fit_height_ini'][7])*(2500-df1['D_dry_point'][7])) + \
-                                    (0.5*(df1['cor_height'][5]+df1['fit_height_ini'][7])*(df1['D_dry_point'][7]-1000))
-    else:
-        df1['cor_height'][5] = df1['slope'][6]*1000 + df1['interc'][6]
-        df1['cor_count'][5] = 0.5*(df1['cor_height'][6]+df1['cor_height'][5])*1500
-
-    if (500<df1['D_dry_point'][5]<=1000)&(df1['D_dry_point'][6]>1000):
-        df1['cor_height'][4] = df1['slope'][4]*500 + df1['interc'][4]
-        df1['cor_count'][4]  = (0.5*(df1['cor_height'][5]+df1['fit_height_ini'][5])*(1000-df1['D_dry_point'][5])) + \
-            (0.5*(df1['cor_height'][4]+df1['fit_height_ini'][5])*(df1['D_dry_point'][5]-500))
-    elif (500<df1['D_dry_point'][5]<1000)&(df1['D_dry_point'][6]<1000):
-        df1['cor_height'][4] = df1['slope'][4]*500 + df1['interc'][4]
-        df1['cor_count'][4] = (0.5*(df1['cor_height'][4]+df1['fit_height_ini'][5])*(df1['D_dry_point'][5]-500)) + \
-            (0.5*(df1['fit_height_ini'][5]+df1['fit_height_ini'][6])*(df1['D_dry_point'][6]-df1['D_dry_point'][5])) +\
-                (0.5*(df1['fit_height_ini'][6]+df1['cor_height'][5])*(1000-df1['D_dry_point'][6]))
-    elif (df1['D_dry_point'][5]<500)&(df1['D_dry_point'][6]<1000):
-        df1['cor_height'][4] = df1['slope'][5]*500 + df1['interc'][5]
-        df1['cor_count'][4] = (0.5*(df1['cor_height'][5]+df1['fit_height_ini'][6])*(1000-df1['D_dry_point'][6])) +\
-            (0.5*(df1['cor_height'][4]+df1['fit_height_ini'][6])*(df1['D_dry_point'][6]-500))
-    else:
-        df1['cor_height'][4] = df1['slope'][5]*500 + df1['interc'][5]
-        df1['cor_count'][4] = 0.5*(df1['cor_height'][5]+df1['cor_height'][4])*500
-
-    if (300<df1['D_dry_point'][4]<=500)&(df1['D_dry_point'][5]>500):
-        df1['cor_height'][3] = df1['slope'][3]*300 + df1['interc'][3]
-        df1['cor_count'][3] = (0.5*(df1['cor_height'][4]+df1['fit_height_ini'][4])*(500-df1['D_dry_point'][4])) +\
-            (0.5*(df1['cor_height'][3]+df1['fit_height_ini'][4])*(df1['D_dry_point'][4]-300))
-    elif (300<df1['D_dry_point'][4]<500)&(df1['D_dry_point'][5]<500):
-        df1['cor_height'][3] = df1['slope'][3]*300 + df1['interc'][3]
-        df1['cor_count'][3] = (0.5*(df1['cor_height'][3]+df1['fit_height_ini'][4])*(df1['D_dry_point'][4]-300)) + \
-            (0.5*(df1['fit_height_ini'][4]+df1['fit_height_ini'][5])*(df1['D_dry_point'][5]-df1['D_dry_point'][4])) +\
-                (0.5*(df1['fit_height_ini'][5]+df1['cor_height'][4])*(500-df1['D_dry_point'][5]))
-    elif (df1['D_dry_point'][4]<300)&(df1['D_dry_point'][5]<500):
-        df1['cor_height'][3] = df1['slope'][4]*300 + df1['interc'][4]
-        df1['cor_count'][3] = (0.5*(df1['cor_height'][4]+df1['fit_height_ini'][5])*(500-df1['D_dry_point'][5])) + \
-            (0.5*(df1['cor_height'][3]+df1['fit_height_ini'][5])*(df1['D_dry_point'][5]-300))
-    else:
-        df1['cor_height'][3] = df1['slope'][4]*300 + df1['interc'][4]
-        df1['cor_count'][3] = 0.5*(df1['cor_height'][4]+df1['cor_height'][3])*200
-
-    if (100<df1['D_dry_point'][3]<=300)&(df1['D_dry_point'][4]>300):
-        df1['cor_height'][2] = df1['slope'][2]*100 + df1['interc'][2]
-        df1['cor_count'][2] = (0.5*(df1['cor_height'][3]+df1['fit_height_ini'][3])*(300-df1['D_dry_point'][3])) +\
-            (0.5*(df1['cor_height'][2]+df1['fit_height_ini'][3])*(df1['D_dry_point'][3]-100))
-    elif (100<df1['D_dry_point'][3]<300)&(df1['D_dry_point'][4]<300):
-        df1['cor_height'][2] = df1['slope'][2]*100 + df1['interc'][2]
-        df1['cor_count'][2] = (0.5*(df1['cor_height'][2]+df1['fit_height_ini'][3])*(df1['D_dry_point'][3]-100)) +\
-            (0.5*(df1['fit_height_ini'][3]+df1['fit_height_ini'][4])*(df1['D_dry_point'][4]-df1['D_dry_point'][3])) + \
-                (0.5*(df1['fit_height_ini'][4]+df1['cor_height'][3])*(300-df1['D_dry_point'][4]))
-    elif (df1['D_dry_point'][3]<100)&(df1['D_dry_point'][4]<300):
-        df1['cor_height'][2] = df1['slope'][3]*100 + df1['interc'][3]
-        df1['cor_count'][2] = (0.5*(df1['cor_height'][3]+df1['fit_height_ini'][4])*(300-df1['D_dry_point'][4])) +\
-            (0.5*(df1['cor_height'][2]+df1['fit_height_ini'][4])*(df1['D_dry_point'][4]-100))
-    else:
-        df1['cor_height'][2] = df1['slope'][3]*100 + df1['interc'][3]
-        df1['cor_count'][2] = 0.5*(df1['cor_height'][3]+df1['cor_height'][2])*200
-
-    if (50<df1['D_dry_point'][2]<=100)&(df1['D_dry_point'][3]>100):
-        df1['cor_height'][0] = df1['slope'][1]*50 + df1['interc'][1]
-        df1['cor_count'][0] = (0.5*(df1['cor_height'][2]+df1['fit_height_ini'][2])*(100-df1['D_dry_point'][2])) +\
-            (0.5*(df1['cor_height'][0]+df1['fit_height_ini'][2])*(df1['D_dry_point'][2]-50))
-    elif (50<df1['D_dry_point'][2]<100)&(df1['D_dry_point'][3]>100):
-        df1['cor_height'][0] = df1['slope'][1]*50 + df1['interc'][1]
-        df1['cor_count'][0] = (0.5*(df1['cor_height'][0]+df1['fit_height_ini'][2])*(df1['D_dry_point'][2]-50)) + \
-            (0.5*(df1['fit_height_ini'][2]+df1['fit_height_ini'][3])*(df1['D_dry_point'][3]-df1['D_dry_point'][2])) + \
-                (0.5*(df1['fit_height_ini'][3]+df1['cor_height'][2])*(100-df1['D_dry_point'][3]))
-    elif (df1['D_dry_point'][2]<50)&(df1['D_dry_point'][3]>100):
-        df1['cor_height'][0] = df1['slope'][2]*50 + df1['interc'][2]
-        df1['cor_count'][0] = (0.5*(df1['cor_height'][2]+df1['fit_height_ini'][3])*(100-df1['D_dry_point'][3])) + \
-            (0.5*(df1['cor_height'][0]+df1['fit_height_ini'][3])*(df1['D_dry_point'][3]-50))
-    else:
-        df1['cor_height'][0] = df1['slope'][2]*50 + df1['interc'][2]
-        df1['cor_count'][0] = 0.5*(df1['cor_height'][2]+df1['cor_height'][0])*50
-
     pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0 = \
-        df1['cor_count'][0], df1['cor_count'][2], df1['cor_count'][3], df1['cor_count'][4], df1['cor_count'][5], df1['cor_count'][6], df1['cor_count'][7]
-    # else:
-    #     print('Condition is not satisfied')
+        df1.loc[0,'cor_count'], df1.loc[2,'cor_count'], df1.loc[3,'cor_count'], df1.loc[4,'cor_count'], df1.loc[5,'cor_count'], df1.loc[6,'cor_count'], df1.loc[7,'cor_count']
+    
     return pc0_1, pc0_3, pc0_5, pc1_0, pc2_5, pc5_0, pc10_0, hum, tem, dew
