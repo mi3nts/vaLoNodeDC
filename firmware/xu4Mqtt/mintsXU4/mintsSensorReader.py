@@ -49,17 +49,15 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
+    
     if(latestOn):
        mL.writeJSONLatest(sensorDictionary,sensorName)
     if(mqttOn):
        mL.writeMQTTLatest(sensorDictionary,sensorName)   
 
-    print("-----------------------------------")
-    
+    print("---------- MINTS PREDICTION -----------")
     mC.doPrediction(sensorName,sensorDictionary,dateTime)
-    
-
-    print("-----------------END------------------")
+    print("---------------- END -----------------")
     print()
 
 
