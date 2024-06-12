@@ -45,7 +45,7 @@ loaded_humidModel = joblib.load(modelFile)
     
 def doPrediction(sensorID,sensorDictionary,dateTime):
     print("-----------------------------------")
-    print("------- Humidity Correctiom -------")
+    print("------- Humidity Correction -------")
     climateNullValidity     = 0
     climateDateTimeValidity = 0
     climateValidity         = 0
@@ -115,7 +115,8 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
                     T_D = temperature - dewPoint
                     if humidity > 40:
                         humidityValidity = 1
-                    if T_D < 2.5:
+                    if T_D < 50:
+                    # if T_D < 2.5:
                         dewPointValidity = 1
 
 
