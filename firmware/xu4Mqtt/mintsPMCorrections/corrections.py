@@ -93,14 +93,10 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
             if is_valid_temperature(temperature) and is_valid_humidity(humidity):
                 print("Climate Data is valid")
                 climateValidity = 1
-
-                if (dateTime-dateTimeClimate ).total_seconds() < 300: 
+                if (dateTime-dateTimeClimate).total_seconds() < 300: 
                     print("Cimate date time is valid")
                     climateDateTimeValidity = 1
-
                     T_D = temperature - dewPoint
-
-                    print(T_D)
                     if humidity > 40:
                         humidityValidity = 1
                     if T_D < 2.5:
