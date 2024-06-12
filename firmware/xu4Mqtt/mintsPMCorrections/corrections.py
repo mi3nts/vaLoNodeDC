@@ -114,15 +114,10 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
                     print("Cimate date time is valid")
                     climateDateTimeValidity = 1
                     T_D = temperature - dewPoint
-                    if humidity > 30:
-                    # if humidity > 40:
+                    if humidity > 40:
                         humidityValidity = 1
-                    if T_D < 50:
-                    # if T_D < 2.5:
+                    if T_D < 2.5:
                         dewPointValidity = 1
-
-
-
 
         print("Validity Checks")
         if (climateNullValidity == 1 and 
