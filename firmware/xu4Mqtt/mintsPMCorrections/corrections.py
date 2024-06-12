@@ -64,8 +64,7 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
         climateData     = loadJSONLatestClimate(climateSensor)
         dateTimeClimate = datetime.datetime.strptime(climateData['dateTime'], "%Y-%m-%d %H:%M:%S.%f")
 
-        cor_pm2_5   = sensorDictionary['pm2_5']
-        ml_pm2_5    = sensorDictionary['pm2_5']
+ 
 
         pc0_1, pc0_3, pc0_5,\
             pc1_0, pc2_5, pc5_0, \
@@ -74,14 +73,31 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
                         sensorDictionary['pc1_0'], sensorDictionary['pc2_5'], sensorDictionary['pc5_0'], \
                         sensorDictionary['pc10_0']
         
-        temperature,humidity,pressure,dewPoint= -100,-100,-100,-100
-
         cor_pc0_1, cor_pc0_3, cor_pc0_5, \
             cor_pc1_0, cor_pc2_5, cor_pc5_0,\
                 cor_pc10_0 \
                             =  pc0_1, pc0_3, pc0_5,\
                                 pc1_0, pc2_5, pc5_0, \
                                     pc10_0 
+
+        pm0_1, pm0_3, pm0_5,\
+            pm1_0, pm2_5, pm5_0, \
+                pm10_0 = \
+                        sensorDictionary['pm0_1'], sensorDictionary['pm0_3'], sensorDictionary['pm0_5'],\
+                        sensorDictionary['pm1_0'], sensorDictionary['pm2_5'], sensorDictionary['pm5_0'], \
+                        sensorDictionary['pm10_0']
+        
+        cor_pm0_1, cor_pm0_3, cor_pm0_5, \
+            cor_pm1_0, cor_pm2_5, cor_pm5_0,\
+                cor_pm10_0 \
+                            =  pm0_1, pm0_3, pm0_5,\
+                                pm1_0, pm2_5, pm5_0, \
+                                    pm10_0 
+
+
+        ml_pm2_5    = pm2_5
+        
+        temperature,humidity,pressure,dewPoint= -100,-100,-100,-100
 
         # Checking Validity 
         if climateData is not None:
@@ -105,7 +121,7 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
 
 
 
-        # if humidityValidity and dewPointValidity:
+        print("Validity Checks")
         if (climateNullValidity == 1 and 
             climateDateTimeValidity == 1 and 
             climateValidity == 1 and 
