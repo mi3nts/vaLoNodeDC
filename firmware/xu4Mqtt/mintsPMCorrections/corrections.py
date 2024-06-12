@@ -105,63 +105,63 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
 
 
 
-    # if humidityValidity and dewPointValidity:
-    if (climateNullValidity == 1 and 
-        climateDateTimeValidity == 1 and 
-        climateValidity == 1 and 
-        humidityValidity == 1 and 
-        dewPointValidity == 1):
+        # if humidityValidity and dewPointValidity:
+        if (climateNullValidity == 1 and 
+            climateDateTimeValidity == 1 and 
+            climateValidity == 1 and 
+            humidityValidity == 1 and 
+            dewPointValidity == 1):
 
-        print("Obtaining Corrected Particle Counts")
-        cor_pc0_1, cor_pc0_3, cor_pc0_5, \
-                cor_pc1_0, cor_pc2_5, cor_pc5_0,\
-                    cor_pc10_0,\
-                        humidity, temperature, dewPoint  = \
-                            humidityCorrectedPC(\
-                                pc0_1, pc0_3, pc0_5, \
-                                    pc1_0, pc2_5, pc5_0, \
-                                        pc10_0, \
-                                            humidity, temperature, dewPoint)
-        
-        cor_pm0_1, cor_pm0_3, cor_pm0_5, \
-            cor_pm1_0, cor_pm2_5, cor_pm5_0, \
-                cor_pm10_0 =\
-                            humidityCorrectedPM(cor_pc0_1, cor_pc0_3, cor_pc0_5,\
-                                                    cor_pc1_0, cor_pc2_5, cor_pc5_0, \
-                                                        cor_pc10_0)
+            print("Obtaining Corrected Particle Counts")
+            cor_pc0_1, cor_pc0_3, cor_pc0_5, \
+                    cor_pc1_0, cor_pc2_5, cor_pc5_0,\
+                        cor_pc10_0,\
+                            humidity, temperature, dewPoint  = \
+                                humidityCorrectedPC(\
+                                    pc0_1, pc0_3, pc0_5, \
+                                        pc1_0, pc2_5, pc5_0, \
+                                            pc10_0, \
+                                                humidity, temperature, dewPoint)
+            
+            cor_pm0_1, cor_pm0_3, cor_pm0_5, \
+                cor_pm1_0, cor_pm2_5, cor_pm5_0, \
+                    cor_pm10_0 =\
+                                humidityCorrectedPM(cor_pc0_1, cor_pc0_3, cor_pc0_5,\
+                                                        cor_pc1_0, cor_pc2_5, cor_pc5_0, \
+                                                            cor_pc10_0)
 
-        ml_pm2_5 ,mlValidity = \
-                            mlCorrectedPM(temperature,humidity,pressure,dewPoint,\
-                                           cor_pm2_5)
+            ml_pm2_5 ,mlValidity = \
+                                mlCorrectedPM(temperature,humidity,pressure,dewPoint,\
+                                            cor_pm2_5)
         
-    # At this point you generate the final ordered dictionary to  be published
-     
-    sensorDictionary = OrderedDict([
-                ("dateTime"                 ,str(dateTime)), # always the same
-        		("pc0_1"                    ,cor_pc0_1), 
-            	("pc0_3"                    ,cor_pc0_3),
-                ("pc0_5"                    ,cor_pc0_5),
-                ("pc1_0"                    ,cor_pc1_0),
-            	("pc2_5"                    ,cor_pc2_5),
-        		("pc5_0"                    ,cor_pc5_0), 
-            	("pc10_0"                   ,cor_pc10_0),
-        		("pm0_1"                    ,cor_pm0_1), 
-            	("pm0_3"                    ,cor_pm0_3),
-                ("pm0_5"                    ,cor_pm0_5),
-                ("pm1_0"                    ,cor_pm1_0),
-            	("pm2_5"                    ,cor_pm2_5),
-        		("pm5_0"                    ,cor_pm5_0), 
-            	("pm10_0"                   ,cor_pm10_0),
-                ("pm2_5ML"                  ,ml_pm2_5),
-        		("climateNullValidity"      ,climateNullValidity), 
-            	("climateDateTimeValidity"  ,climateDateTimeValidity),
-                ("climateValidity"          ,climateValidity),
-                ("humidityValidity"         ,humidityValidity),
-            	("dewPointValidity"         ,dewPointValidity),
-        		("mlValidity"               ,mlValidity)
-                 ])
-    print(sensorDictionary)
-    mSR.sensorFinisher(dateTime,"IPS7100MC",sensorDictionary)
+        # At this point you generate the final ordered dictionary to  be published
+        
+        sensorDictionary = OrderedDict([
+                    ("dateTime"                 ,str(dateTime)), # always the same
+                    ("pc0_1"                    ,cor_pc0_1), 
+                    ("pc0_3"                    ,cor_pc0_3),
+                    ("pc0_5"                    ,cor_pc0_5),
+                    ("pc1_0"                    ,cor_pc1_0),
+                    ("pc2_5"                    ,cor_pc2_5),
+                    ("pc5_0"                    ,cor_pc5_0), 
+                    ("pc10_0"                   ,cor_pc10_0),
+                    ("pm0_1"                    ,cor_pm0_1), 
+                    ("pm0_3"                    ,cor_pm0_3),
+                    ("pm0_5"                    ,cor_pm0_5),
+                    ("pm1_0"                    ,cor_pm1_0),
+                    ("pm2_5"                    ,cor_pm2_5),
+                    ("pm5_0"                    ,cor_pm5_0), 
+                    ("pm10_0"                   ,cor_pm10_0),
+                    ("pm2_5ML"                  ,ml_pm2_5),
+                    ("climateNullValidity"      ,climateNullValidity), 
+                    ("climateDateTimeValidity"  ,climateDateTimeValidity),
+                    ("climateValidity"          ,climateValidity),
+                    ("humidityValidity"         ,humidityValidity),
+                    ("dewPointValidity"         ,dewPointValidity),
+                    ("mlValidity"               ,mlValidity)
+                    ])
+        print(sensorDictionary)
+        mSR.sensorFinisher(dateTime,"IPS7100MC",sensorDictionary)
 
 
 
