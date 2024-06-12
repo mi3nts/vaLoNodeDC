@@ -44,8 +44,7 @@ modelFile         = mD.modelFile
 loaded_humidModel = joblib.load(modelFile)
     
 def doPrediction(sensorID,sensorDictionary,dateTime):
-    print("-----------------------------------")
-    print("------- Humidity Correction -------")
+
     climateNullValidity     = 0
     climateDateTimeValidity = 0
     climateValidity         = 0
@@ -58,6 +57,8 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
         keepClimateData(dateTime,sensorID,sensorDictionary)
 
     if sensorID == pmSensor:
+        print("-----------------------------------")
+        print("------- Humidity Correction -------")
         # At this point load up the climate sensor 
         print("PM data read")
         dateTime        = dateTime
