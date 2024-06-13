@@ -77,9 +77,9 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
         cor_pc0_1, cor_pc0_3, cor_pc0_5, \
             cor_pc1_0, cor_pc2_5, cor_pc5_0,\
                 cor_pc10_0 \
-                            =  pc0_1, pc0_3, pc0_5,\
-                                pc1_0, pc2_5, pc5_0, \
-                                    pc10_0 
+                            =  float(pc0_1), float(pc0_3), float(pc0_5),\
+                                float(pc1_0), float(pc2_5), float(pc5_0), \
+                                    float(pc10_0) 
 
         pm0_1, pm0_3, pm0_5,\
             pm1_0, pm2_5, pm5_0, \
