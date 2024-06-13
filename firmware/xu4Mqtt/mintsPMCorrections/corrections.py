@@ -152,13 +152,13 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
         
         sensorDictionary = OrderedDict([
                     ("dateTime"                 ,str(dateTime)), # always the same
-                    ("pc0_1"                    ,round(cor_pc0_1)), 
-                    ("pc0_3"                    ,round(cor_pc0_3)),
-                    ("pc0_5"                    ,round(cor_pc0_5)),
-                    ("pc1_0"                    ,round(cor_pc1_0)),
-                    ("pc2_5"                    ,round(cor_pc2_5)),
-                    ("pc5_0"                    ,round(cor_pc5_0)), 
-                    ("pc10_0"                   ,round(cor_pc10_0)),
+                    ("pc0_1"                    ,cor_pc0_1)), 
+                    ("pc0_3"                    ,cor_pc0_3),
+                    ("pc0_5"                    ,cor_pc0_5),
+                    ("pc1_0"                    ,cor_pc1_0),
+                    ("pc2_5"                    ,cor_pc2_5),
+                    ("pc5_0"                    ,cor_pc5_0), 
+                    ("pc10_0"                   ,cor_pc10_0),
                     ("pm0_1"                    ,cor_pm0_1), 
                     ("pm0_3"                    ,cor_pm0_3),
                     ("pm0_5"                    ,cor_pm0_5),
