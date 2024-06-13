@@ -116,7 +116,8 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
                     T_D = temperature - dewPoint
                     if humidity > 40:
                         humidityValidity = 1
-                    if T_D < 2.5:
+                    if T_D < 25:
+                    # if T_D < 2.5:
                         dewPointValidity = 1
 
         print("Validity Checks")
