@@ -149,7 +149,7 @@ def doPrediction(sensorID,sensorDictionary,dateTime):
                                             cor_pm2_5)
         
         # At this point you generate the final ordered dictionary to  be published
-        
+        check = round(cor_pc0_1)
         sensorDictionary = OrderedDict([
                     ("dateTime"                 ,str(dateTime)), # always the same
                     ("pc0_1"                    ,cor_pc0_1), 
