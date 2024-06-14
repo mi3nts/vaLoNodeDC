@@ -3,6 +3,7 @@
 #   ---------------------------------
 #   Originial SW Written by: Prabuddha Dewage, 
 #   Edited for live data streams on Mints systems by Lakitha Wijeratne
+#   Original Code available @: https://github.com/mi3nts/particulateMatterCorrections
 #   
 #   Mints: Multi-scale Integrated Sensing and Simulation
 #   
