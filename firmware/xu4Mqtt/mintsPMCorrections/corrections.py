@@ -254,7 +254,7 @@ def keepClimateData(dateTime,sensorName,sensorDictionary):
                 ])
         
     if climateData:
-        writeJSONLatestClimate(sensorDictionary,sensorName)
+        writeJSONLatestClimate(climateData,sensorName)
 
 def writeJSONLatestClimate(sensorDictionary,sensorName):
     directoryIn  = dataFolderTmp+"/"+macAddress+"/"+sensorName+".json"
