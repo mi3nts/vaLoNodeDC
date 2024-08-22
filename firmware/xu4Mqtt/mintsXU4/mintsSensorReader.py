@@ -984,7 +984,7 @@ def GPSGPRMC2Write(dataString,dateTime):
                 ("longitudeDirection"   ,sensorData.lon_dir),
                 ("speedOverGround"      ,sensorData.spd_over_grnd),
                 ("trueCourse"           ,sensorData.true_course),
-                ("dateStamp"            ,sensorData.datestamp),
+                ("dateStamp"            ,str(sensorData.datestamp)),
                 ("magVariation"         ,sensorData.mag_variation),
                 ("magVariationDirection",sensorData.mag_var_dir)
                  ])
