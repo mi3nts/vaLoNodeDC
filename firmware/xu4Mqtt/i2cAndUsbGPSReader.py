@@ -136,6 +136,7 @@ if __name__ == "__main__":
                                 mSR.GPSGPGGA2Write(dataString.split('\r')[0],dateTime)
                                 lastGPGGA = time.time()
                             if (dataString.startswith("$GPRMC") and mSR.getDeltaTime(lastGPRMC,delta)):
+                                print(dataString)
                                 mSR.GPSGPRMC2Write(dataString.split('\r')[0],dateTime)
                                 lastGPRMC = time.time()
                             if (dataString.startswith("$GNGGA") and mSR.getDeltaTime(lastGNGGA,delta)):
