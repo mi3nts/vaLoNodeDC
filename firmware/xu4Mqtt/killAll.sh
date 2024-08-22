@@ -9,6 +9,10 @@ kill $(pgrep -f 'python3 i2cReader.py')
 sleep 1
 kill $(pgrep -f 'python3 airMarReader.py')
 sleep 1
+kill $(pgrep -f 'python3 i2cAndUsbGPSReader.py')
+sleep 1
+kill $(pgrep -f 'python3 rg15USBReader.py')  
+sleep 1
 kill $(pgrep -f 'python3 GPSReader.py')
 sleep 1
 kill $(pgrep -f 'python3 audioDeleter.py')

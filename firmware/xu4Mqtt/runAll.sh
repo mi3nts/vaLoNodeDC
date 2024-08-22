@@ -7,11 +7,6 @@ sleep 5
 python3 ips7100ReaderV1.py &
 sleep 5
 
-# kill $(pgrep -f 'python3 i2cReader.py')
-# sleep 5
-# python3 i2cReader.py &
-# sleep 5
-
 kill $(pgrep -f 'python3 i2cAndUsbGPSReader.py')
 sleep 5
 python3 i2cAndUsbGPSReader.py &

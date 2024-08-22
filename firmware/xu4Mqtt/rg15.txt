@@ -1,0 +1,1 @@
+nohup python3 rg15Reader.py >/dev/null 2>&1 &

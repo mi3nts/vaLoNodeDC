@@ -34,7 +34,7 @@ def sendChars(printStr,serIn,charsIn,sleepTime):
 
 
 def main(firstReset,firstResolutionSetup,firstMetricSystemSetup,loopInterval):
-
+  
     time.sleep(1)
 
     ser = serial.Serial(
@@ -58,6 +58,7 @@ def main(firstReset,firstResolutionSetup,firstMetricSystemSetup,loopInterval):
         try:
             for c in ser.read():
                 line.append(chr(c))
+                print(line)
                 if chr(c) == '\n' and (firstReset):
                     readLine(line,5)
                     sendChars("Reset Sensor",ser,'O\r\n',2)
