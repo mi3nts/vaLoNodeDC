@@ -183,6 +183,7 @@ if __name__ == "__main__":
         except Exception as e:
             time.sleep(.5)
             print ("Error and type: %s - %s." % (e,type(e)))
+            traceback.print_exc()
             time.sleep(.5)
         
                   
