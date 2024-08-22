@@ -988,7 +988,7 @@ def GPSGPRMC2Write(dataString,dateTime):
                 ("magVariation"         ,sensorData.mag_variation),
                 ("magVariationDirection",sensorData.mag_var_dir)
                  ])
-
+        print(sensorDictionary)
         #Getting Write Path
         sensorFinisher(dateTime,sensorName,sensorDictionary)
 
